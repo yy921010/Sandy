@@ -11,6 +11,7 @@ export interface Props {
 import HeadTag from "~/components/HeadTag.astro";
 import RiverBackground from "~/components/RiverBackground";
 import SpeedInsights from "@vercel/speed-insights/astro";
+import Analytics from "@vercel/analytics/astro";
 ---
 
 <html lang="en">
@@ -23,6 +24,7 @@ import SpeedInsights from "@vercel/speed-insights/astro";
     <meta name="generator" content={Astro.generator} />
     <HeadTag {...Astro.props} />
     <SpeedInsights />
+    <Analytics />
     <ClientRouter fallback={"animate"} />
     <script is:inline>
       (function () {
