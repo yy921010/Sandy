@@ -1,0 +1,95 @@
+---
+import { ClientRouter } from "astro:transitions";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  snapshot?: string;
+  path?: string;
+  pubDate?: string;
+}
+import HeadTag from "~/components/HeadTag.astro";
+import RiverBackground from "~/components/RiverBackground";
+import SpeedInsights from "@vercel/speed-insights/astro";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta content="rgb(33, 39, 55)" name="theme-color" />
+    <meta name="generator" content={Astro.generator} />
+    <HeadTag {...Astro.props} />
+    <SpeedInsights />
+    <ClientRouter fallback={"animate"} />
+    <script is:inline>
+      (function () {
+        const storedTheme = JSON.parse(
+          window.localStorage.getItem("theme") ?? '"auto"'
+        );
+        let presetTheme;
+        if (storedTheme === "auto") {
+          presetTheme = window.matchMedia("(prefers-color-scheme: dark)")
+            .matches
+            ? "dark"
+            : "light";
+        } else {
+          presetTheme = storedTheme;
+        }
+        if (presetTheme === "dark") {
+          document.documentElement.classList.add("dark");
+          document.documentElement.style.colorScheme = "dark";
+        } else {
+          document.documentElement.classList.remove("dark");
+          document.documentElement.style.colorScheme = "light";
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <RiverBackground client:only="react" />
+    <section class="flex flex-col bg-background h-screen">
+      <slot />
+    </section>
+  </body>
+</html>
+<style is:global>
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+  ::view-transition-old(root) {
+    z-index: 1;
+  }
+  ::view-transition-new(root) {
+    z-index: 9999;
+  }
+  .dark::view-transition-old(root) {
+    z-index: 9999;
+  }
+  .dark::view-transition-new(root) {
+    z-index: 1;
+  }
+
+  @font-face {
+    font-family: "smiley-sans";
+    src: url("/scripts/fonts/SmileySans-Oblique.ttf");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  @keyframes slide-in {
+    0% {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+</style>

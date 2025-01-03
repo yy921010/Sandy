@@ -1,0 +1,77 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { Config } from "~/config";
+import SubHeader from "~/components/SubHeader.astro";
+import Prose from "~/components/Prose.astro";
+import Footer from "~/components/Footer.astro";
+import type { Menu } from "~/types/config";
+import { animation } from "~/utils/common";
+import AppHeader from "~/components/Header.astro";
+
+export interface Props {
+  parent: string;
+  sub: string;
+}
+
+const { parent, sub } = Astro.props;
+const menuChildren = Config.menus.find((item) => item.url.endsWith(parent));
+
+const curSubMenu =
+  (menuChildren &&
+    menuChildren.children?.find((item) => item.url.endsWith(sub))) ||
+  ({} as Menu);
+
+const subMenuTitle = curSubMenu.title
+  ? `${curSubMenu.title} - ${Config.base.title}`
+  : "";
+---
+
+<BaseLayout title={subMenuTitle} description={subMenuTitle}>
+  <AppHeader />
+  {
+    menuChildren && menuChildren.children ? (
+      <SubHeader
+        menus={menuChildren.children}
+        activeKey={sub}
+        parentUrl={parent}
+      />
+    ) : (
+      []
+    )
+  }
+
+  <main class="px-6 md:px-0 flex-1 w-full" transition:animate={animation}>
+    <Prose>
+      <slot />
+    </Prose>
+  </main>
+  <Footer />
+</BaseLayout>
+<script>
+  // prevent flash when using view transitions in astro
+  const initColorMode = () => {
+    const storedTheme = JSON.parse(
+      window.localStorage.getItem("theme") ?? '"auto"'
+    );
+    let presetTheme;
+    if (storedTheme === "auto") {
+      presetTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    } else {
+      presetTheme = storedTheme;
+    }
+    if (presetTheme === "dark") {
+      document.documentElement.classList.add("dark");
+      document.documentElement.style.colorScheme = "dark";
+    } else {
+      document.documentElement.classList.remove("dark");
+      document.documentElement.style.colorScheme = "light";
+    }
+  };
+
+  // Runs on initial navigation
+  initColorMode();
+  // Runs on view transitions navigation
+  document.addEventListener("astro:after-swap", initColorMode);
+</script>
