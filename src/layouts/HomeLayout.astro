@@ -1,11 +1,9 @@
 ---
-import AppHeader from "~/components/Header.astro";
 import Footer from "~/components/Footer.astro";
 import Prose from "~/components/Prose.astro";
 import type { MarkdownLayoutProps } from "astro";
 import BaseLayout from "./BaseLayout.astro";
 import { animation } from "~/utils/common";
-import RiverBackground from "~/components/RiverBackground";
 
 type Props = MarkdownLayoutProps<{
   // 在这里定义 frontmatter 属性
@@ -17,8 +15,7 @@ const { frontmatter } = Astro.props;
 ---
 
 <BaseLayout title={frontmatter.title} description={frontmatter.description}>
-  <AppHeader />
-  <main class="px-6 md:px-7 w-full flex-1 py-16" transition:animate={animation}>
+  <main class="px-6 md:px-7 w-full flex-1 py-28" transition:animate={animation}>
     <Prose>
       <slot />
     </Prose>
