@@ -1,7 +1,6 @@
 ---
-import { cn, Link } from "@nextui-org/react";
 import type { Menu } from "~/types/config";
-import { removeSlash } from "~/utils/common";
+import { cn, removeSlash } from "~/utils/common";
 
 export interface Props {
   menus: Menu[];
@@ -15,21 +14,25 @@ const { menus, activeKey, parentUrl } = Astro.props;
 <div
   class={cn(
     "prose",
-    "flex w-full flex-col space-y-4 pb-10 px-6 max-w-screen-sm md:max-w-screen-md mx-auto",
-    "md:flex-row md:space-x-6 md:space-y-0 md:px-0 md:py-16"
+    "pt-10 md:pb-0 pb-10",
+    "flex w-full flex-col gap-4 px-6 max-w-screen-sm md:max-w-screen-md mx-auto",
+    "md:flex-row md:space-x-6 md:space-y-0 md:px-0 md:pt-28 md:pb-4"
   )}
 >
   {
     menus.map((menu) => {
       return (
-        <Link
-          className={cn("text-xl md:text-2xl no-underline text-default-500", {
-            "text-primary-500": menu.url?.endsWith(activeKey),
-          })}
+        <a
+          class={cn(
+            "text-xl md:text-2xl no-underline text-default-500 hover:text-default-700",
+            {
+              "text-primary-500": menu.url?.endsWith(activeKey),
+            }
+          )}
           href={`/${parentUrl}-${removeSlash(menu.url)}/blog`}
         >
           {menu.title}
-        </Link>
+        </a>
       );
     })
   }

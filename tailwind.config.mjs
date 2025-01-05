@@ -1,4 +1,5 @@
 import { nextui } from "@nextui-org/react";
+import daisyui from "daisyui"
 import twTypography from "@tailwindcss/typography";
 
 /** @type {import('tailwindcss').Config} */
@@ -7,6 +8,9 @@ export default {
     "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
+  daisyui: {
+    themes: ["light", "dark",],
+  },
   darkMode: "class",
   theme: {
     extend: {
@@ -15,5 +19,5 @@ export default {
       },
     },
   },
-  plugins: [twTypography(), nextui()],
+  plugins: [twTypography(), nextui(), daisyui],
 };

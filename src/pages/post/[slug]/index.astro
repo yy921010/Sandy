@@ -19,7 +19,6 @@ const { Content } = await render(post);
 // 计算阅读时间
 const words = post.body?.split(" ").length ?? 0;
 const minutes = Math.ceil(words / 200);
-
 ---
 
 <PostLayout
@@ -29,10 +28,10 @@ const minutes = Math.ceil(words / 200);
   path={`/post/${slug}`}
   pubDate={post.data.pubDate.toString()}
 >
-  <h1>{post.data.title}</h1>
+  <h1 transition:name={`post-index-id-${post.id}`}>{post.data.title}</h1>
   <p class="text-default-500">
     {dayjs(post.data.pubDate).format("MM-DD")}. {minutes} 分钟
   </p>
   <Content />
-  {post.data.comment &&  <Comment client:only="react" />}
+  {post.data.comment && <Comment client:only="react" />}
 </PostLayout>

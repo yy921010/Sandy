@@ -5,6 +5,7 @@ import { processMenu } from "~/utils/list";
 import { groupByArray } from "~/utils/common";
 import { getCollection } from "astro:content";
 import dayjs from "dayjs";
+import { slide } from "astro:transitions";
 
 /**
  * 注册SSG URL
@@ -40,8 +41,12 @@ const groupedByYear = groupByArray(currentPostList, "pubDate");
             <div class="flex w-full flex-col space-y-8 z-10">
               {posts.map(({ id, data: { title, pubDate } }) => (
                 <a
-                  class="text-2xl text-default-500 cursor-pointer hover:text-primary-500 no-underline"
+                  class="text-2xl text-base-content cursor-pointer hover:text-primary-500 no-underline"
                   href={`/post/${id}/`}
+                  transition:name={`post-index-id-${id}`}
+                  transition:animate={slide({
+                    duration: "0.35s",
+                  })}
                   title={title}
                   data-astro-prefetch
                 >

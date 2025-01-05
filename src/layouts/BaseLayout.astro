@@ -12,6 +12,7 @@ import HeadTag from "~/components/HeadTag.astro";
 import RiverBackground from "~/components/RiverBackground";
 import SpeedInsights from "@vercel/speed-insights/astro";
 import Analytics from "@vercel/analytics/astro";
+import Navbar from "~/components/Navbar.astro";
 ---
 
 <html lang="en">
@@ -25,12 +26,10 @@ import Analytics from "@vercel/analytics/astro";
     <HeadTag {...Astro.props} />
     <SpeedInsights />
     <Analytics />
-    <ClientRouter fallback={"animate"} />
+    <ClientRouter />
     <script is:inline>
       (function () {
-        const storedTheme = JSON.parse(
-          window.localStorage.getItem("theme") ?? '"auto"'
-        );
+        const storedTheme = window.localStorage.getItem("theme") ?? "auto";
         let presetTheme;
         if (storedTheme === "auto") {
           presetTheme = window.matchMedia("(prefers-color-scheme: dark)")
@@ -52,12 +51,16 @@ import Analytics from "@vercel/analytics/astro";
   </head>
   <body>
     <RiverBackground client:only="react" />
-    <section class="flex flex-col bg-background h-screen">
+    <Navbar />
+    <section class="flex flex-col h-screen">
       <slot />
     </section>
   </body>
 </html>
 <style is:global>
+  body {
+    margin-right: calc(100vw - 100%);
+  }
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation: none;

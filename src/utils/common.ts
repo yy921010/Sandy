@@ -1,4 +1,6 @@
 import type { TransitionDirectionalAnimations } from "astro";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export const removeSlash = (str: string) => str.replace(/^\//, "");
 
@@ -25,6 +27,8 @@ export const animation: TransitionDirectionalAnimations = {
   forwards: {
     old: {
       name: "slide-in",
+      duration: "0.35s",
+      easing: "ease-in-out",
     },
     new: {
       name: "slide-in",
@@ -35,6 +39,8 @@ export const animation: TransitionDirectionalAnimations = {
   backwards: {
     old: {
       name: "slide-in",
+      duration: "0.35s",
+      easing: "ease-in-out",
     },
     new: {
       name: "slide-in",
@@ -43,3 +49,7 @@ export const animation: TransitionDirectionalAnimations = {
     },
   },
 };
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
