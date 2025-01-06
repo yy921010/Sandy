@@ -1,14 +1,14 @@
 ---
 title: "Docker 入门"
 pubDate: 2024-05-06
-description: "Docker 入门，作为一个前端，一些docker 知识点"
+description: "Docker 入门，作为一个前端，需要了解的一些docker 知识"
 menu: "tech"
 comment: true
 ---
 
 ## 是什么？
 
-Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 或 Windows 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。
+想象一下，你要搬家，却不想一件件搬所有的家当，而是把所有东西都装进一个统一的箱子，不管目的地是哪个城市，随时打开箱子就能继续生活。Docker 就是这样的“箱子”！它是一种开源的容器化技术，可以把应用程序和它需要的环境“打包”起来，让它能随时随地跑起来，无需担心“跑不动”。
 
 Docker 的主要特点包括：
 
@@ -20,25 +20,23 @@ Docker 的主要特点包括：
 
 ## 概念
 
-- **Docker 镜像**
-  Docker 镜像是容器的模板，包含了运行容器所需的所有文件和配置。可以通过 Docker 镜像构建容器。
-- **Docker 容器**
-  Docker 容器是 Docker 镜像的实例，包含了运行应用程序所需的所有内容，包括代码、运行时、系统工具、系统库等。容器之间相互隔离，但又共享主机的操作系统内核。
-- **Docker 仓库**
-  是用来存储 Docker 镜像的地方，可以是公共仓库（如 Docker Hub）或私有仓库。用户可以从仓库中拉取镜像，也可以将自己构建的镜像推送到仓库中。
+- 镜像（Image）：像做饭的“菜谱”，告诉你怎么搭建应用。
+- 容器（Container）：根据“菜谱”做出来的实际饭菜，一个运行中的实例。
+- 仓库（Repository）：存储“菜谱”的地方，随时可以拿出来用，比如全球知名的“菜谱库”——Docker Hub。
 
 ## 如何工作
 
 这里借用图片 [bytebytego](http://blog.bytebytego.com/)
 ![Untitled.jpeg](https://home.matrixpunk.com:9800/i/2024/05/06/6638bcc73a0ab.jpeg)
 
-### 如何使用？
+### Docker 的工作原理
 
-一般构建 docker 应用分为以下步骤:
-
-- 编写 Dockerfile
-- 构建 Docker 镜像
-- 运行 Docker 容器
+1. 编写一个 Dockerfile
+   它是一张“TODO 清单”，告诉 Docker 需要用什么基础环境、拷贝哪些代码、安装哪些依赖。
+2. 构建一个 镜像
+   Docker 根据 Dockerfile 把你的应用和环境“打包”成一个文件。
+3. 运行 容器
+   用镜像“生成”一个容器，容器里跑的就是你的应用，随时可以启动、停止。
 
 #### 编写 Dockerfile
 
@@ -172,7 +170,7 @@ docker exec -it <container_name> /bin/bash
 
 ### Docker Compose
 
-Docker Compose 是一个用于定义和运行多容器 Docker 应用程序的工具。通过 Compose，可以使用 YAML 文件来配置应用的服务，然后使用一个命令就可以创建并启动所有服务。
+如果你的项目涉及多个容器，比如一个跑应用、一个跑数据库，那么你需要 Docker Compose。它像一本多菜谱的菜单，一键可以上齐所有菜。
 
 - **多容器应用程序**：当您的应用程序由多个容器组成时，可以使用 Docker Compose 来定义、管理和运行这些容器。
 - **开发环境**：在开发过程中，使用 Docker Compose 可以轻松地设置开发环境，包括数据库、缓存和其他服务，以便团队成员可以快速启动整个开发环境。
@@ -185,7 +183,7 @@ Docker Compose 是一个用于定义和运行多容器 Docker 应用程序的工
 #### 使用 Docker Compose
 
 > 确保当前目录存在 docker-compose.yml compose.yml 文件
-> 139.196.125.106 服务器的 docker-compose.yml 文件在/home/ocs/docker 目录下
+> 10.10.10.10 服务器的 docker-compose.yml 文件在/home/ocs/docker 目录下
 
 #### Yml 文件如下，以及参数说明
 
@@ -206,7 +204,7 @@ services:
     environment: # 环境变量
       - NGINX_PORT=80
       - API_ENV=api
-      - API_URL=http://121.37.190.7:8081/horizon/
+      - API_URL=http://10.10.10.10:8081/horizon/
       - NODE_ENV=production
       - WEBAPP=horizon
     volumes: # 映射路径地址 ->  主机路径：容器路径

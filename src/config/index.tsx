@@ -19,7 +19,7 @@ export const Config: BlogConfig = {
       icon: <NotebookText size={20} />,
       children: [
         {
-          title: "随笔",
+          title: "生活",
           url: "/reflection",
         },
         {
