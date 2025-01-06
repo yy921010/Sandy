@@ -1,5 +1,5 @@
 ---
-import { Github, Moon, Rss, Sun } from "lucide-react";
+import { Github, Moon, NotebookText, Rss, Sun } from "lucide-react";
 import { Config } from "~/config";
 import type { Menu } from "~/types/config";
 import { removeSlash } from "~/utils/common";
@@ -17,7 +17,7 @@ const processMenuItem = (menu: Menu) => {
   return {
     title: menu.title,
     url: `/${removeSlash(menu.url)}-${removeSlash(firstChild.url)}/${menu.key}`,
-    icon: menu.icon,
+    key: menu.key,
   };
 };
 
@@ -40,8 +40,8 @@ const mainMenus = Config.menus.map(processMenuItem);
     }
     {
       mainMenus.map((menu) => (
-        <a class="btn btn-ghost btn-circle hidden  md:hidden" href={menu.url}>
-          {menu.icon}
+        <a class="btn btn-ghost btn-circle  md:hidden" href={menu.url}>
+          {menu.key === "blog" && <NotebookText size={20} />}
         </a>
       ))
     }
