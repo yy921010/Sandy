@@ -17,7 +17,7 @@ const { slug } = Astro.params;
 const { Content } = await render(post);
 
 // 计算阅读时间
-const words = post.body?.split(" ").length ?? 0;
+const words = post.body?.replace(/\s+/g, "").length ?? 0;
 const minutes = Math.ceil(words / 200);
 ---
 

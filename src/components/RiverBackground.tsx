@@ -46,6 +46,11 @@ const CONFIG = {
     MAX_NEW_POINTS_PER_FRAME: 30,
     MIN_DIMENSION: 100,
   },
+  RESPONSIVE: {
+    BASE_WIDTH: 1920, // 基准宽度
+    MIN_SCALE: 0.5, // 最小缩放比例
+    MAX_SCALE: 1.5, // 最大缩放比例
+  },
 } as const;
 
 let points: { x: number; y: number; t: number }[] = [];
@@ -55,7 +60,17 @@ const getForceOnPoint = (x: number, y: number, z: number) =>
   2 *
   TWO_PI;
 
+// 添加计算响应式缩放的函数
+const calculateResponsiveScale = (width: number): number => {
+  const scale = width / CONFIG.RESPONSIVE.BASE_WIDTH;
+  return Math.max(
+    CONFIG.RESPONSIVE.MIN_SCALE,
+    Math.min(CONFIG.RESPONSIVE.MAX_SCALE, scale)
+  );
+};
+
 function initializeCanvas(width: number, height: number, isDark: boolean) {
+  const scale = calculateResponsiveScale(width);
   const colors = CONFIG.COLORS[isDark ? "dark" : "light"];
   createCanvas(width, height);
   background(colors.background);
@@ -63,7 +78,8 @@ function initializeCanvas(width: number, height: number, isDark: boolean) {
   noFill();
   noiseSeed(Date.now());
 
-  points = Array.from({ length: CONFIG.AMOUNT }, () => ({
+  const scaledAmount = Math.floor(CONFIG.AMOUNT * scale);
+  points = Array.from({ length: scaledAmount }, () => ({
     x: random() * width,
     y: random() * height,
     t: 0,
@@ -119,8 +135,13 @@ function draw(
   isDark: boolean
 ) {
   try {
+    const scale = calculateResponsiveScale(width);
     const colors = CONFIG.COLORS[isDark ? "dark" : "light"];
     background(colors.background);
+
+    // 使用缩放后的配置
+    const scaledAmount = Math.floor(CONFIG.AMOUNT * scale);
+    const scaledLength = CONFIG.LENGTH * scale;
 
     // 确保points数组始终有效
     if (!points?.length) {
@@ -133,10 +154,10 @@ function draw(
       ({ x, y }) => x >= 0 && x <= width && y >= 0 && y <= height
     );
 
-    if (points.length < CONFIG.AMOUNT) {
+    if (points.length < scaledAmount) {
       const newPointsCount = Math.min(
         CONFIG.SAFETY.MAX_NEW_POINTS_PER_FRAME,
-        CONFIG.AMOUNT - points.length
+        scaledAmount - points.length
       );
 
       const newPoints = Array.from({ length: newPointsCount }, () => {
@@ -161,8 +182,8 @@ function draw(
       );
 
       const rad = getForceOnPoint(x, y, (mouseX + mouseY) * 0.5 + timeOffset);
-      const nx = Math.min(Math.max(0, x + cos(rad) * CONFIG.LENGTH), width);
-      const ny = Math.min(Math.max(0, y + sin(rad) * CONFIG.LENGTH), height);
+      const nx = Math.min(Math.max(0, x + cos(rad) * scaledLength), width);
+      const ny = Math.min(Math.max(0, y + sin(rad) * scaledLength), height);
 
       line(x, y, nx, ny);
       p.x = nx;
