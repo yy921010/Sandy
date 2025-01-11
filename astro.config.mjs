@@ -1,23 +1,25 @@
-// @ts-check
-import { defineConfig } from 'astro/config';
+// @ts-nocheck
+import { defineConfig } from "astro/config";
 
-import tailwind from '@astrojs/tailwind';
+import tailwind from "@astrojs/tailwind";
 
-import react from '@astrojs/react';
+import react from "@astrojs/react";
 
-import mdx from '@astrojs/mdx';
+import mdx from "@astrojs/mdx";
 
-import sitemap from '@astrojs/sitemap';
+import sitemap from "@astrojs/sitemap";
 
 import vercel from "@astrojs/vercel";
+import remarkMermaid from "remark-mermaidjs";
+import expressiveCode from "astro-expressive-code";
 
 // https://astro.build/config
 export default defineConfig({
-  prefetch: {
-    defaultStrategy: 'viewport'
+  site: "https://www.ethyoung.me",
+  markdown: {
+    remarkPlugins: [remarkMermaid],
   },
-  site: 'https://www.ethyoung.me',
-  integrations: [ react(), tailwind(), mdx(), sitemap()],
+  integrations: [expressiveCode(), react(), tailwind(), mdx(), sitemap()],
   output: "static",
   adapter: vercel({
     webAnalytics: {
