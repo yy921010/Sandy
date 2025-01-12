@@ -4,9 +4,10 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "npm run format-font && astro dev",
-    "build": "npx playwright install --with-deps && npm run format-font && astro build && chmod +x ./scripts/copySitemap.sh && sh ./scripts/copySitemap.sh",
+    "build": "npm run format-font && astro build && chmod +x ./scripts/copySitemap.sh && sh ./scripts/copySitemap.sh",
     "preview": "astro preview",
     "astro": "astro",
+    "postinstall": "playwright install --with-deps",
     "format-font": "node scripts/optimizationFont.js"
   },
   "dependencies": {
