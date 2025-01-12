@@ -27,25 +27,7 @@ comment: true
 
 > mark：View Transitions API 简化了复杂动画的实现，无需手动处理位置计算或动画控制，尤其适合页面级的场景切换和动画增强。
 
-<div className="bg-default-300 rounded-small">
-```mermaid
-graph TD
-    A[触发动画<br>调用 document.startViewTransition 函数 ] --> B[捕获状态快照<br>旧快照和新快照]
-    B --> C[生成动画<br>基于快照差异]
-    C --> D[执行动画<br>应用 CSS 动画伪元素]
-    D --> E[动画完成<br>更新页面状态]
-    E --> F[移除伪元素<br>呈现最终状态]
-    
-    subgraph CSS控制动画
-        D1[::view-transition<br>顶层伪元素]
-        D2[::view-transition-group<br>分组控制]
-        D3[::view-transition-old<br>旧状态动画]
-        D4[::view-transition-new<br>新状态动画]
-    end
-
-    D --> CSS控制动画
-```
-</div>
+![1736689455217.png](https://home.matrixpunk.com:9800/i/2025/01/12/6783c733778da.png)
 ### 流程图说明
 
 1. **触发动画**：用户通过调用 `document.startViewTransition()` 开始动画。
