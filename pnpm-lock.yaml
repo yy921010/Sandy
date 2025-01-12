@@ -86,9 +86,6 @@ importers:
       mermaid:
         specifier: ^11.4.1
         version: 11.4.1
-      mermaid-isomorphic:
-        specifier: ^3.0.0
-        version: 3.0.0(playwright@1.49.1)
       nanostores:
         specifier: ^0.11.3
         version: 0.11.3

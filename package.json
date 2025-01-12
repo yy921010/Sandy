@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "npm run format-font && astro dev",
-    "build": "npx playwright install --with-deps chromium && npm run format-font && astro build && chmod +x ./scripts/copySitemap.sh && sh ./scripts/copySitemap.sh",
+    "build": "npx playwright install --with-deps && npm run format-font && astro build && chmod +x ./scripts/copySitemap.sh && sh ./scripts/copySitemap.sh",
     "preview": "astro preview",
     "astro": "astro",
     "format-font": "node scripts/optimizationFont.js"
@@ -36,7 +36,6 @@
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.469.0",
     "mermaid": "^11.4.1",
-    "mermaid-isomorphic": "^3.0.0",
     "nanostores": "^0.11.3",
     "p5i": "^0.6.0",
     "playwright": "^1.49.1",
