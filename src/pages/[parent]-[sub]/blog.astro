@@ -44,9 +44,6 @@ const groupedByYear = groupByArray(currentPostList, "pubDate");
                   class="text-2xl text-base-content cursor-pointer hover:text-primary-500 no-underline"
                   href={`/post/${id}/`}
                   transition:name={`post-index-id-${id}`}
-                  transition:animate={slide({
-                    duration: "0.35s",
-                  })}
                   title={title}
                   data-astro-prefetch
                 >

@@ -106,6 +106,17 @@ const isDev = process.env.NODE_ENV === "development";
   :target {
     padding-top: 20px;
   }
+  @keyframes slide-enter {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
 
   .slide-enter-content > * {
     --stagger: 0;
