@@ -4,3 +4,9 @@ export interface PathParams {
     sub?: string;
   };
 }
+export interface TOCItem {
+  depth: number;
+  slug: string;
+  text: string;
+  children?: TOCItem[];
+}

@@ -8,7 +8,7 @@ export const Config: BlogConfig = {
     author: "Ethan Young",
   },
   social: {
-    github: "https://github.com/charlesMYoung",
+    github: "https://github.com/charsm",
   },
   menus: [
     {

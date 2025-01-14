@@ -1,3 +1,8 @@
+/**
+ * RiverBackground.tsx
+ * @description 河流背景组件
+ *
+ */
 import React, { useEffect, useRef, useCallback, useMemo } from "react";
 import type { P5I } from "p5i";
 import { p5i } from "p5i";
@@ -267,7 +272,9 @@ const RiverBackground: React.FC = () => {
       className="fixed top-0 left-0 pointer-events-none -z-1 print:hidden"
       style={{
         background: CONFIG.COLORS[isDark ? "dark" : "light"].background,
-        maskImage: "radial-gradient(circle, transparent, black)", // 优化渐变效果
+        maskImage: isDark
+          ? "radial-gradient(circle, transparent, black)" // 黑暗背景
+          : "radial-gradient(circle, transparent, white)", // 白色背景
       }}
     />
   );

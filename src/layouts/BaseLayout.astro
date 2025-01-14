@@ -13,6 +13,8 @@ import RiverBackground from "~/components/RiverBackground";
 import SpeedInsights from "@vercel/speed-insights/astro";
 import Analytics from "@vercel/analytics/astro";
 import Navbar from "~/components/Navbar.astro";
+
+const isDev = process.env.NODE_ENV === "development";
 ---
 
 <html lang="en">
@@ -25,7 +27,7 @@ import Navbar from "~/components/Navbar.astro";
     <meta name="generator" content={Astro.generator} />
     <HeadTag {...Astro.props} />
     <SpeedInsights />
-    <Analytics />
+    <Analytics debug={isDev} />
     <ClientRouter />
     <script is:inline>
       (function () {
@@ -58,6 +60,9 @@ import Navbar from "~/components/Navbar.astro";
   </body>
 </html>
 <style is:global>
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     margin-right: calc(100vw - 100%);
   }
@@ -96,5 +101,9 @@ import Navbar from "~/components/Navbar.astro";
       transform: translateY(0);
       opacity: 1;
     }
+  }
+
+  :target {
+    padding-top: 20px;
   }
 </style>

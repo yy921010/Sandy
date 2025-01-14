@@ -1,6 +1,7 @@
 import type { TransitionDirectionalAnimations } from "astro";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { TOCItem } from "~/types/common";
 
 export const removeSlash = (str: string) => str.replace(/^\//, "");
 
@@ -52,4 +53,27 @@ export const animation: TransitionDirectionalAnimations = {
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+export function generateNestedTOC(toc: TOCItem[]): TOCItem[] {
+  const nestedTOC: TOCItem[] = [];
+  const stack: TOCItem[] = [];
+
+  toc.forEach((item) => {
+    const newItem: TOCItem = { ...item, children: [] };
+
+    while (stack.length > 0 && stack[stack.length - 1].depth >= newItem.depth) {
+      stack.pop();
+    }
+
+    if (stack.length === 0) {
+      nestedTOC.push(newItem);
+    } else {
+      stack[stack.length - 1].children!.push(newItem);
+    }
+
+    stack.push(newItem);
+  });
+
+  return nestedTOC;
 }
