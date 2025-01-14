@@ -46,7 +46,7 @@ const Comments = () => {
       {mounted ? (
         <Giscus
           id="comments"
-          repo="charlesMYoung/comment"
+          repo="charsm/comment"
           repoId="R_kgDOL338Cg"
           category="Announcements"
           categoryId="DIC_kwDOL338Cs4CfLVy"
