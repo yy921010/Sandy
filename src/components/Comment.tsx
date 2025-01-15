@@ -24,7 +24,7 @@ const Comments = () => {
     setTheme(theme);
     // 监听主题变化
     const observer = new MutationObserver(() => {
-      setTheme(getSavedTheme());
+      setTheme(getSavedTheme() || "light");
     });
     observer.observe(document.documentElement, {
       attributes: true,
