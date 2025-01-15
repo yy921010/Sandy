@@ -19,5 +19,12 @@ export type BlogConfig = {
   menus: Menu[];
   social: {
     github: string;
+    email: string;
   };
+  partnerLinks: {
+    name: string;
+    avatar?: string;
+    url: string;
+    desc: string;
+  }[];
 };

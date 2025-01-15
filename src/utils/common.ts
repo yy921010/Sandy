@@ -27,9 +27,9 @@ export const groupByArray = <T>(array: T[], key: keyof T) => {
 export const animation: TransitionDirectionalAnimations = {
   forwards: {
     old: {
-      name: "slide-in",
-      duration: "0.35s",
-      easing: "ease-in-out",
+      name: "slide-out",
+      duration: "0.2s",
+      easing: "ease-in",
     },
     new: {
       name: "slide-in",
@@ -39,9 +39,9 @@ export const animation: TransitionDirectionalAnimations = {
   },
   backwards: {
     old: {
-      name: "slide-in",
-      duration: "0.35s",
-      easing: "ease-in-out",
+      name: "slide-out",
+      duration: "0.2s",
+      easing: "ease-in",
     },
     new: {
       name: "slide-in",
