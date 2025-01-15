@@ -9,7 +9,21 @@ export const Config: BlogConfig = {
   },
   social: {
     github: "https://github.com/charsm",
+    email: "mailto:charlesmaxwellyoung@gmail.com",
   },
+  partnerLinks: [
+    {
+      name: "花墨",
+      avatar: "https://api.flowersink.com/img/logo.png",
+      url: "https://flowersink.com",
+      desc: "一个喜欢写作、分享生活的已婚前端的个人网站",
+    },
+    {
+      name: "我要去巴萨",
+      url: "https://www.aaabbc.space:8095/",
+      desc: "技术分享博客",
+    },
+  ],
   menus: [
     {
       title: "文章",
@@ -18,7 +32,7 @@ export const Config: BlogConfig = {
       children: [
         {
           title: "生活",
-          url: "/reflection",
+          url: "/essay",
         },
         {
           title: "技术",
@@ -33,6 +47,11 @@ export const Config: BlogConfig = {
           url: "/log",
         },
       ],
+    },
+    {
+      title: "友链",
+      url: "/partner-link",
+      key: "partnerLink",
     },
   ],
 };

@@ -103,6 +103,18 @@ const isDev = process.env.NODE_ENV === "development";
     }
   }
 
+  @keyframes slide-out {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    to {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+  }
+
   :target {
     padding-top: 20px;
   }
