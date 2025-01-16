@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from "astro:transitions";
+import '@fontsource/noto-sans';
 
 export interface Props {
   title?: string;
@@ -29,6 +30,7 @@ const isDev = process.env.NODE_ENV === "development";
     <SpeedInsights />
     <Analytics debug={isDev} />
     <ClientRouter />
+
     <script is:inline>
       (function () {
         const storedTheme = window.localStorage.getItem("theme") ?? "auto";
@@ -84,13 +86,6 @@ const isDev = process.env.NODE_ENV === "development";
     z-index: 1;
   }
 
-  @font-face {
-    font-family: "smiley-sans";
-    src: url("/scripts/fonts/SmileySans-Oblique.ttf");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
   @keyframes slide-in {
     0% {
       transform: translateY(10px);

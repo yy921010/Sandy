@@ -1,6 +1,8 @@
 import { nextui } from "@nextui-org/react";
 import daisyui from "daisyui"
 import twTypography from "@tailwindcss/typography";
+import defaultTheme from 'tailwindcss/defaultTheme'
+
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -16,7 +18,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["smiley-sans"],
+        sans: ['Noto San',...defaultTheme.fontFamily.sans],
       },
     },
   },
