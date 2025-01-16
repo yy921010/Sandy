@@ -4,11 +4,12 @@ import dayjs from "dayjs";
 import PostLayout from "~/layouts/PostLayout.astro";
 import Comment from "~/components/Comment";
 import { Toc } from "~/components/Toc";
+import { replaceSlash } from "~/utils/common";
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("posts");
   return blogEntries.map((post) => ({
-    params: { slug: post.id },
+    params: { slug: replaceSlash(post.id) },
     props: { post },
   }));
 }
@@ -29,7 +30,9 @@ const minutes = Math.ceil(words / 200);
   path={`/post/${slug}`}
   pubDate={post.data.pubDate.toString()}
 >
-  <h1 transition:name={`post-index-id-${post.id}`}>{post.data.title}</h1>
+  <h1 transition:name={`post-index-id-${post.id.replace("/", "-")}`}>
+    {post.data.title}
+  </h1>
   <p class="text-default-500">
     {dayjs(post.data.pubDate).format("MM-DD")}. {minutes} 分钟
   </p>

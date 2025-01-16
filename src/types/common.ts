@@ -10,3 +10,5 @@ export interface TOCItem {
   text: string;
   children?: TOCItem[];
 }
+
+export type CollectionType = "life" | "log" | "note" | "tech";

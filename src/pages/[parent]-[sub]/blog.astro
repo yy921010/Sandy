@@ -2,7 +2,7 @@
 import BlogLayout from "~/layouts/BlogLayout.astro";
 import { Config } from "~/config";
 import { processMenu } from "~/utils/list";
-import { groupByArray } from "~/utils/common";
+import { groupByArray, replaceSlash } from "~/utils/common";
 import { getCollection } from "astro:content";
 import dayjs from "dayjs";
 
@@ -17,12 +17,14 @@ const allBlogPosts = await getCollection("posts");
 const posts = allBlogPosts.map((item) => ({
   ...item,
   ...item.data,
+  id: replaceSlash(item.id),
+  menuKey: item.id.split("/")[0],
   pubDate: dayjs(item.data.pubDate).year(),
 }));
 
 const { parent, sub } = Astro.params;
 const currentPostList =
-  groupByArray(posts, "menu").find((item) => item.key === sub)?.value || [];
+  groupByArray(posts, "menuKey").find((item) => item.key === sub)?.value || [];
 const groupedByYear = groupByArray(currentPostList, "pubDate");
 ---
 

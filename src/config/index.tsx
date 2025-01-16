@@ -32,7 +32,7 @@ export const Config: BlogConfig = {
       children: [
         {
           title: "生活",
-          url: "/essay",
+          url: "/life",
         },
         {
           title: "技术",

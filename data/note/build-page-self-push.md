@@ -2,7 +2,6 @@
 title: "Github 构建发布到私有服务器"
 pubDate: 2024-05-11
 description: "blog action"
-menu: "note"
 isComment: false
 ---
 

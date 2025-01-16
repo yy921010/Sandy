@@ -2,7 +2,6 @@
 title: "Docker 入门"
 pubDate: 2024-05-06
 description: "Docker 入门，作为一个前端，需要了解的一些docker 知识"
-menu: "tech"
 comment: true
 toc: true
 ---

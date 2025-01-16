@@ -26,10 +26,7 @@ import { Config } from "~/config";
     {
       Config.partnerLinks.map((link) => {
         return (
-          <div
-            key={link.name}
-            class="relative  max-w-fit min-w-min flex items-center justify-between box-border whitespace-nowrap px-2 h-11 text-small rounded-full bg-default/40 text-default-700 pointer gap-2"
-          >
+          <div class="relative  max-w-fit min-w-min flex items-center justify-between box-border whitespace-nowrap px-2 h-11 text-small rounded-full bg-default/40 text-default-700 pointer gap-2">
             <a class="avatar" href={link.url}>
               <div class=" ring-offset-base-100 w-8 rounded-full ring ring-offset-2 text-center leading-8">
                 {link.avatar ? (
