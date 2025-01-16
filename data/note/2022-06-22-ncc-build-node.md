@@ -2,7 +2,6 @@
 title: "ncc 打包编译nestjs"
 pubDate: 2022-06-22
 description: "ncc 打包编译nestjs"
-menu: "note"
 comment: true
 ---
 

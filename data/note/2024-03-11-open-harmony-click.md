@@ -2,7 +2,6 @@
 title: "OpenHarmony 中点击事件的渲染优化"
 pubDate: 2024-03-11
 description: "解决 OpenHarmony 应用中状态切换导致手机页面卡顿的问题"
-menu: "note"
 comment: true
 ---
 

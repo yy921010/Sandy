@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
+import { replaceSlash } from "~/utils/common";
 import generateOgImage from "~/utils/generateOgImage";
 
 export async function getStaticPaths() {
@@ -7,7 +8,7 @@ export async function getStaticPaths() {
     p.filter(({ data }) => !data.isDraft)
   );
   return posts.map((post) => ({
-    params: { slug: post.id },
+    params: { slug: replaceSlash(post.id) },
     props: post,
   }));
 }

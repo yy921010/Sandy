@@ -77,3 +77,5 @@ export function generateNestedTOC(toc: TOCItem[]): TOCItem[] {
 
   return nestedTOC;
 }
+
+export const replaceSlash = (str: string) => str.replace(/\//g, "-");
