@@ -2,7 +2,7 @@
 title: "credentials VS withCredentials"
 pubDate: 2025-01-16
 description: "credentials withCredentials两者之间的区别"
-isComment: true
+comment: true
 toc: true
 ---
 
