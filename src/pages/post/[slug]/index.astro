@@ -24,13 +24,13 @@ const minutes = Math.ceil(words / 200);
 ---
 
 <PostLayout
-  snapshot={post.id}
+  snapshot={replaceSlash(post.id)}
   title={post.data.title}
   description={post.data.description}
   path={`/post/${slug}`}
   pubDate={post.data.pubDate.toString()}
 >
-  <h1 transition:name={`post-index-id-${post.id.replace("/", "-")}`}>
+  <h1 transition:name={`post-index-id-${replaceSlash(post.id)}`}>
     {post.data.title}
   </h1>
   <p class="text-default-500">
