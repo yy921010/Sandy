@@ -13,7 +13,7 @@ comment: true
 
 原始实现方式如下，直接在 Text 组件上同时处理样式和点击事件：
 
-```jsx
+```tsx
 GridItem(){
   Text(){
     Span($r('app.string.single_word')).doubleFancy(!this.isDouble);
