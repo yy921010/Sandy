@@ -24,7 +24,7 @@ const { menus, activeKey, parentUrl } = Astro.props;
       return (
         <a
           class={cn(
-            "text-xl md:text-2xl no-underline text-default-500 hover:text-default-700",
+            "text-xl md:text-2xl no-underline text-default-500 hover:text-default-700 transition-colors delay-75",
             {
               "text-primary-500": menu.url?.endsWith(activeKey),
             }

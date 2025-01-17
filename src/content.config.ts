@@ -11,7 +11,7 @@ const posts = defineCollection({
     tags: z.array(z.string()).optional().default([]),
     toc: z.boolean().optional().default(false),
   }),
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./data" }),
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/data" }),
 });
 
 export const collections = {
