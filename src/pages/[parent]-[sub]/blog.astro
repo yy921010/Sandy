@@ -19,12 +19,14 @@ const posts = allBlogPosts.map((item) => ({
   ...item.data,
   id: replaceSlash(item.id),
   menuKey: item.id.split("/")[0],
+  createDate: new Date(item.data.pubDate).getTime(),
   pubDate: dayjs(item.data.pubDate).year(),
 }));
 
 const { parent, sub } = Astro.params;
-const currentPostList =
+let currentPostList =
   groupByArray(posts, "menuKey").find((item) => item.key === sub)?.value || [];
+currentPostList = currentPostList.sort((a, b) => b.createDate - a.createDate);
 const groupedByYear = groupByArray(currentPostList, "pubDate");
 ---
 
