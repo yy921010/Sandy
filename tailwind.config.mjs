@@ -1,4 +1,4 @@
-import { nextui } from "@nextui-org/react";
+import { heroui } from  "@heroui/react";
 import twTypography from "@tailwindcss/typography";
 import defaultTheme from 'tailwindcss/defaultTheme'
 
@@ -18,5 +18,5 @@ export default {
       },
     },
   },
-  plugins: [twTypography(), nextui()],
+  plugins: [twTypography(), heroui()],
 };

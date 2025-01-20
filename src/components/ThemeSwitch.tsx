@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import { Moon, Sun } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { themeAtom } from "~/store";
