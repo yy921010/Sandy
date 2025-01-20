@@ -11,9 +11,22 @@ const posts = defineCollection({
     tags: z.array(z.string()).optional().default([]),
     toc: z.boolean().optional().default(false),
   }),
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/data" }),
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/data/posts" }),
+});
+
+const tlf = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    pubDate: z.date(),
+    description: z.string().optional().default(""),
+    comment: z.boolean().optional().default(false),
+    tags: z.array(z.string()).optional().default([]),
+    toc: z.boolean().optional().default(false),
+  }),
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/data/tlf" }),
 });
 
 export const collections = {
   posts,
+  tlf,
 };
