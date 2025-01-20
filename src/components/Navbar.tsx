@@ -1,6 +1,5 @@
 import {
   Navbar,
-  NavbarBrand,
   NavbarContent,
   NavbarItem,
   Link,
