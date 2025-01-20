@@ -21,10 +21,12 @@ const { frontmatter, title, description } = Astro.props;
   title={title || frontmatter.title}
   description={description || frontmatter.description}
 >
-  <main class="px-6 md:px-7 w-full flex-1 py-28" transition:animate={animation}>
+  <main
+    class="px-6 md:px-7 w-full flex-1 py-6 md:py-28"
+    transition:animate={animation}
+  >
     <Prose>
       <slot />
     </Prose>
   </main>
-  <Footer />
 </BaseLayout>

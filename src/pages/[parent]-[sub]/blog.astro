@@ -44,14 +44,14 @@ const groupedByYear = groupByArray(currentPostList, "pubDate");
             <div class="flex w-full flex-col space-y-8 z-10">
               {posts.map(({ id, data: { title, pubDate } }) => (
                 <a
-                  class="text-2xl text-base-content cursor-pointer hover:text-primary-500 no-underline"
+                  class="text-2xl text-default-600 cursor-pointer hover:text-focus no-underline transition-colors delay-75"
                   href={`/post/${id}/`}
                   transition:name={`post-index-id-${id}`}
                   title={title}
                   data-astro-prefetch
                 >
                   {title}
-                  <span class="ml-2 text-xl text-zinc-500">
+                  <span class="ml-2 text-xl text-default-400">
                     {dayjs(pubDate).format("MM-DD")}
                   </span>
                 </a>
