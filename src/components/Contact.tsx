@@ -1,75 +1,58 @@
-import { Avatar, Chip } from "@nextui-org/react";
+import { Input, Button, Form, Textarea } from "@heroui/react";
 import { Mail } from "lucide-react";
 import React from "react";
 import { Config } from "~/config";
+type Contact = {
+  name: string;
+  avatar: string;
+  url: string;
+  desc: string;
+};
 
-export default function Contact() {
-  const [state, setState] = React.useState({
-    name: "",
-    avatar: "",
-    url: "",
-    desc: "",
-  });
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const sendMeEmailHandler = (e: React.MouseEvent<HTMLAnchorElement>) => {
+export default function ContactUser() {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const data: Contact = {
+      name: formData.get("name") as string,
+      avatar: formData.get("avatar") as string,
+      url: formData.get("url") as string,
+      desc: formData.get("desc") as string,
+    };
     window.open(
       Config.social.email +
-        `?subject=申请友链&body=网站名称：${state.name}%0D%0A头像地址：${state.avatar}%0D%0A网站地址：${state.url}%0D%0A网站描述：${state.desc}`
+        `?subject=申请友链&body=网站名称：${data.name}%0D%0A头像地址：${data.avatar}%0D%0A网站地址：${data.url}%0D%0A网站描述：${data.desc}`
     );
   };
 
   return (
-    <form className="form-control gap-4 md:max-w-md mx-auto">
-      <label className="input input-bordered flex items-center gap-2">
-        网站名称
-        <input
-          type="text"
+    <div className="flex flex-col items-center justify-center w-full h-full">
+      <Form
+        className="w-full max-w-xs"
+        validationBehavior="native"
+        onSubmit={onSubmit}
+      >
+        <Input
+          isRequired
+          errorMessage="请输入站点名称"
+          label="网站名称"
           name="name"
-          className="grow"
-          value={state.name}
-          onChange={handleChange}
         />
-      </label>
-      <label className="input input-bordered flex items-center gap-2">
-        头像地址
-        <input
-          type="text"
-          className="grow"
-          name="avatar"
-          value={state.avatar}
-          onChange={handleChange}
-        />
-      </label>
-      <label className="input input-bordered flex items-center gap-2">
-        网站地址
-        <input
-          type="text"
-          className="grow"
+        <Input
+          isRequired
+          errorMessage="请输入网站地址"
+          label="网站地址"
           name="url"
-          value={state.url}
-          onChange={handleChange}
         />
-      </label>
-      <textarea
-        className="textarea textarea-bordered w-full"
-        placeholder="网站描述"
-        name="desc"
-        value={state.desc}
-        onChange={handleChange}
-      ></textarea>
-      <a onClick={sendMeEmailHandler} className="btn btn-primary">
-        <Mail size={20} />
-        Send me an email
-      </a>
-    </form>
+        <Input label="头像地址" name="avatar" />
+        <Textarea label="网站描述" name="desc" />
+        <div className="flex justify-center w-full mt-4">
+          <Button type="submit" variant="flat" color="primary">
+            <Mail></Mail>
+            Send me email
+          </Button>
+        </div>
+      </Form>
+    </div>
   );
 }

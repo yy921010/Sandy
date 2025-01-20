@@ -42,10 +42,6 @@ export const Config: BlogConfig = {
           title: "笔记",
           url: "/note",
         },
-        {
-          title: "日志",
-          url: "/log",
-        },
       ],
     },
     {

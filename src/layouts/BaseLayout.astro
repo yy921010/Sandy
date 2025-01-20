@@ -13,7 +13,30 @@ import HeadTag from "~/components/HeadTag.astro";
 import RiverBackground from "~/components/RiverBackground";
 import SpeedInsights from "@vercel/speed-insights/astro";
 import Analytics from "@vercel/analytics/astro";
-import Navbar from "~/components/Navbar.astro";
+import Navbar from "~/components/Navbar";
+import type { Menu } from "~/types/config";
+import { removeSlash } from "~/utils/common";
+import { Config } from "~/config";
+import Footer from "~/components/Footer.astro";
+
+const processMenuItem = (menu: Menu) => {
+  if (!menu.children?.length) {
+    return {
+      title: menu.title,
+      url: menu.url,
+      icon: menu.icon,
+    };
+  }
+
+  const [firstChild] = menu.children;
+  return {
+    title: menu.title,
+    url: `/${removeSlash(menu.url)}-${removeSlash(firstChild.url)}/${menu.key}`,
+    key: menu.key,
+  };
+};
+
+const mainMenus = Config.menus.map(processMenuItem);
 
 const isDev = process.env.NODE_ENV === "development";
 ---
@@ -53,12 +76,13 @@ const isDev = process.env.NODE_ENV === "development";
       })();
     </script>
   </head>
-  <body class="min-h-max flex flex-col">
+  <body class="h-screen flex flex-col">
     <RiverBackground client:only="react" />
-    <Navbar />
-    <section class="flex flex-col h-screen bg-background flex-1">
+    <Navbar brandTitle={Config.base.title} menus={mainMenus} client:visible />
+    <section class="flex flex-col bg-background flex-1">
       <slot />
     </section>
+    <Footer />
   </body>
 </html>
 <style is:global>

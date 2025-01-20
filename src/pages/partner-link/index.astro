@@ -2,6 +2,7 @@
 import HomeLayout from "~/layouts/HomeLayout.astro";
 import Contact from "~/components/Contact";
 import { Config } from "~/config";
+import { Avatar, Link } from "@heroui/react";
 ---
 
 <HomeLayout
@@ -22,22 +23,14 @@ import { Config } from "~/config";
   <h1>友链</h1>
   <p>在这里我遇见了新朋友</p>
 
-  <div class="space-x-3 gap-3 flex">
+  <div class="gap-4 flex">
     {
       Config.partnerLinks.map((link) => {
         return (
-          <div class="relative  max-w-fit min-w-min flex items-center justify-between box-border whitespace-nowrap px-2 h-11 text-small rounded-full bg-default/40 text-default-700 pointer gap-2">
-            <a class="avatar" href={link.url}>
-              <div class=" ring-offset-base-100 w-8 rounded-full ring ring-offset-2 text-center leading-8">
-                {link.avatar ? (
-                  <img src={link.avatar} class="!m-0" />
-                ) : (
-                  link.name
-                )}
-              </div>
-            </a>
-            <a href={link.url}>{link.name}</a>
-          </div>
+          <Link href={link.url} key={link.name} className="flex gap-2">
+            <Avatar src={link.avatar} client:visible />
+            {link.name}
+          </Link>
         );
       })
     }

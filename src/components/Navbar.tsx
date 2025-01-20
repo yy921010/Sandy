@@ -5,10 +5,15 @@ import {
   NavbarItem,
   Link,
   Button,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
+  Avatar,
 } from "@heroui/react";
-import { Github, Moon, Rss, Sun } from "lucide-react";
+import { Github, Rss } from "lucide-react";
 import type { Menu } from "~/types/config";
 import { Config } from "~/config";
+import ThemeSwitcher from "./ThemeSwitch";
 
 export default function Header({
   brandTitle,
@@ -17,12 +22,30 @@ export default function Header({
   brandTitle: string;
   menus: Menu[];
 }) {
-
-    return (
+  return (
     <Navbar shouldHideOnScroll isBordered>
-      <NavbarBrand as={Link} href="/">
+      <NavbarContent className="sm:hidden" justify="start">
+        <NavbarMenuToggle />
+      </NavbarContent>
+      <NavbarContent justify="center" className="sm:hidden">
+        <Link href="/" color="foreground">
+          <p className="font-bold text-inherit">{brandTitle}</p>
+        </Link>
+      </NavbarContent>
+      <NavbarContent justify="end" className="sm:hidden">
+        <NavbarItem>
+          <ThemeSwitcher></ThemeSwitcher>
+        </NavbarItem>
+      </NavbarContent>
+      <Link
+        as={Link}
+        href="/"
+        color="foreground"
+        className="hidden sm:flex gap-4"
+      >
+        <Avatar src="/avatar.png"></Avatar>
         <p className="font-bold text-inherit">{brandTitle}</p>
-      </NavbarBrand>
+      </Link>
       <NavbarContent className="hidden sm:flex gap-4" justify="end">
         {menus.map((menu) => (
           <NavbarItem key={menu.title}>
@@ -31,34 +54,45 @@ export default function Header({
             </Link>
           </NavbarItem>
         ))}
-      </NavbarContent>
-      <NavbarItem className="hidden lg:flex">
-        <Button
-          as={Link}
-          variant="light"
-          href={Config.social.github}
-          isIconOnly
-        >
-          <Github size={20} />
-        </Button>
-      </NavbarItem>
-      <NavbarItem>
-        <Button variant="light" isIconOnly>
-          <Rss size={20} />
-        </Button>
-      </NavbarItem>
-      <NavbarItem>
-        <switch-theme>
-          <label
-            className="swap swap-rotate btn btn-ghost btn-circle"
-            id="switchTheme"
+        <NavbarItem className="hidden lg:flex">
+          <Button
+            as={Link}
+            variant="light"
+            href={Config.social.github}
+            isIconOnly
           >
-            <input type="checkbox" />
-            <Moon size={20} className="swap-on" />
-            <Sun size={20} className="swap-off" />
-          </label>
-        </switch-theme>
-      </NavbarItem>
+            <Github size={20} />
+          </Button>
+        </NavbarItem>
+        <NavbarItem>
+          <Button variant="light" isIconOnly as={Link} href="/rss.xml">
+            <Rss size={20} />
+          </Button>
+        </NavbarItem>
+        <NavbarItem>
+          <ThemeSwitcher></ThemeSwitcher>
+        </NavbarItem>
+      </NavbarContent>
+
+      <NavbarMenu>
+        {menus.map((menu) => (
+          <NavbarMenuItem key={menu.title}>
+            <Link color="foreground" href={menu.url} aria-current="page">
+              {menu.title}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+        <NavbarItem>
+          <Link color="foreground" href={Config.social.github}>
+            GitHub
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" href="/rss.xml">
+            RSS
+          </Link>
+        </NavbarItem>
+      </NavbarMenu>
     </Navbar>
   );
 }
