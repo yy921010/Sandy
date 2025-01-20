@@ -1,6 +1,6 @@
 ---
 import { ClientRouter } from "astro:transitions";
-import '@fontsource/noto-sans';
+import "@fontsource/noto-sans";
 
 export interface Props {
   title?: string;
@@ -53,10 +53,10 @@ const isDev = process.env.NODE_ENV === "development";
       })();
     </script>
   </head>
-  <body>
+  <body class="min-h-max flex flex-col">
     <RiverBackground client:only="react" />
     <Navbar />
-    <section class="flex flex-col h-screen">
+    <section class="flex flex-col h-screen bg-background flex-1">
       <slot />
     </section>
   </body>
@@ -64,6 +64,7 @@ const isDev = process.env.NODE_ENV === "development";
 <style is:global>
   html {
     scroll-behavior: smooth;
+    min-height: 100%;
   }
   body {
     margin-right: calc(100vw - 100%);

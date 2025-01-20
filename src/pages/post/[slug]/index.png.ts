@@ -5,7 +5,7 @@ import generateOgImage from "~/utils/generateOgImage";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts").then((p) =>
-    p.filter(({ data }) => !data.isDraft)
+    p.filter(({ data }) => !data.draft)
   );
   return posts.map((post) => ({
     params: { slug: replaceSlash(post.id) },

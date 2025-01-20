@@ -10,7 +10,7 @@ export async function GET(context) {
     description: Config.base.description,
     site: Config.base.baseUrl,
     items: blog
-    .filter((post) => !post.data.isDraft)
+    .filter((post) => !post.data.draft)
     .map((post) => ({
       title: post.data.title,
       pubDate: post.data.pubDate,
