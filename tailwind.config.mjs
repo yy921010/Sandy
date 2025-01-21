@@ -16,6 +16,19 @@ export default {
       fontFamily: {
         sans: ['Noto San',...defaultTheme.fontFamily.sans],
       },
+      animation: {
+        'skew-scroll': 'skew-scroll 20s linear infinite',
+      },
+      keyframes: {
+        'skew-scroll': {
+          '0%': {
+            transform: 'rotateX(20deg) rotateZ(-20deg) skewX(20deg)',
+          },
+          '100%': {
+            transform: 'rotateX(20deg) rotateZ(-20deg) skewX(20deg) translateY(-100%)',
+          },
+        },
+      },
     },
   },
   plugins: [twTypography(), heroui()],

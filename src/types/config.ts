@@ -16,6 +16,13 @@ export type Menu = {
   children?: Menu[];
 };
 
+export type Partner = {
+  name: string;
+  avatar?: string;
+  url: string;
+  desc: string;
+};
+
 export type BlogConfig = {
   base: BaseConfig;
   menus: Menu[];
@@ -23,10 +30,5 @@ export type BlogConfig = {
     github: string;
     email: string;
   };
-  partnerLinks: {
-    name: string;
-    avatar?: string;
-    url: string;
-    desc: string;
-  }[];
+  partnerLinks: Partner[];
 };

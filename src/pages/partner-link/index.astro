@@ -3,6 +3,7 @@ import HomeLayout from "~/layouts/HomeLayout.astro";
 import Contact from "~/components/Contact";
 import { Config } from "~/config";
 import { Avatar, Link } from "@heroui/react";
+import TiltedScroll from "~/components/TiltedScroll";
 ---
 
 <HomeLayout
@@ -35,6 +36,7 @@ import { Avatar, Link } from "@heroui/react";
       })
     }
   </div>
+  <TiltedScroll client:visible partners={Config.partnerLinks} />
   <div class="w-full pt-40">
     <Contact client:visible />
   </div>
