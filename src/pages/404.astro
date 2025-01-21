@@ -1,0 +1,32 @@
+---
+import Noise from "~/components/Noise";
+import HomeLayout from "~/layouts/HomeLayout.astro";
+---
+
+<HomeLayout
+  title="友链"
+  description="感谢认识他们"
+  file=""
+  url=""
+  headings={[]}
+  frontmatter={{
+    file: "",
+    url: undefined,
+    title: "友链",
+    description: "感谢认识他们",
+  }}
+  rawContent={() => ""}
+  compiledContent={() => Promise.resolve("")}
+>
+  <Noise
+    client:visible
+    patternSize={500}
+    patternScaleX={5}
+    patternScaleY={5}
+    patternRefreshInterval={2}
+    patternAlpha={25}
+  />
+  <div class="text-6xl text-center font-bold text-default-200">
+    Opts?! 你迷路喽
+  </div>
+</HomeLayout>
