@@ -14,14 +14,16 @@ export function getStaticPaths() {
 }
 
 const allBlogPosts = await getCollection("posts");
-const posts = allBlogPosts.map((item) => ({
-  ...item,
-  ...item.data,
-  id: replaceSlash(item.id),
-  menuKey: item.id.split("/")[0],
-  createDate: new Date(item.data.pubDate).getTime(),
-  pubDate: dayjs(item.data.pubDate).year(),
-}));
+const posts = allBlogPosts
+  .map((item) => ({
+    ...item,
+    ...item.data,
+    id: replaceSlash(item.id),
+    menuKey: item.id.split("/")[0],
+    createDate: new Date(item.data.pubDate).getTime(),
+    pubDate: dayjs(item.data.pubDate).year(),
+  }))
+  .filter((v) => !v.draft);
 
 const { parent, sub } = Astro.params;
 let currentPostList =
