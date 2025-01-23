@@ -23,6 +23,11 @@ export const Config: BlogConfig = {
       url: "https://www.aaabbc.space:8095/",
       desc: "技术分享博客",
     },
+    {
+      name: "敖武的博客",
+      url: "https://z.wiki",
+      desc: "啦啦啦",
+    },
   ],
   menus: [
     {
