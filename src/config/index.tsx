@@ -28,6 +28,12 @@ export const Config: BlogConfig = {
       url: "https://z.wiki",
       desc: "啦啦啦",
     },
+    {
+      name: "张洪Heo",
+      url: "https://blog.zhheo.com/",
+      desc: "分享设计与科技生活",
+      avatar: "https://bu.dusays.com/2022/12/28/63ac2812183aa.png",
+    },
   ],
   menus: [
     {
