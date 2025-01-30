@@ -46,9 +46,9 @@ const isDev = process.env.NODE_ENV === "development";
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="msapplication-TileColor" content="#ffffff" />
-    <meta content="rgb(33, 39, 55)" name="theme-color" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#000000" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <HeadTag {...Astro.props} />
     <SpeedInsights />
     <Analytics debug={isDev} />
@@ -66,10 +66,16 @@ const isDev = process.env.NODE_ENV === "development";
         } else {
           presetTheme = storedTheme;
         }
+        // 根据实际主题设置 meta[name="theme-color"] 的值
+        const metaThemeColor = document.querySelector(
+          'meta[name="theme-color"]'
+        );
         if (presetTheme === "dark") {
+          metaThemeColor.setAttribute("content", "#000000");
           document.documentElement.classList.add("dark");
           document.documentElement.style.colorScheme = "dark";
         } else {
+          metaThemeColor.setAttribute("content", "#ffffff");
           document.documentElement.classList.remove("dark");
           document.documentElement.style.colorScheme = "light";
         }

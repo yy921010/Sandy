@@ -27,6 +27,15 @@ const ThemeSwitcher: React.FC = () => {
     document.documentElement.setAttribute("data-theme", newTheme);
     themeAtom.set(newTheme);
     setTheme(newTheme);
+    const metaThemeColor = document.querySelector(
+      'meta[name="theme-color"]'
+    ) as HTMLMetaElement | null;
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute(
+        "content",
+        newTheme === "dark" ? "#000000" : "#ffffff"
+      );
+    }
     window.localStorage.setItem("theme", newTheme);
   };
 
