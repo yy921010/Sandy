@@ -56,10 +56,15 @@ const subMenuTitle = curSubMenu.title
     } else {
       presetTheme = storedTheme;
     }
+    // 根据实际主题设置 meta[name="theme-color"] 的值
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (!metaThemeColor) return;
     if (presetTheme === "dark") {
+      metaThemeColor.setAttribute("content", "#000000");
       document.documentElement.classList.add("dark");
       document.documentElement.style.colorScheme = "dark";
     } else {
+      metaThemeColor.setAttribute("content", "#ffffff");
       document.documentElement.classList.remove("dark");
       document.documentElement.style.colorScheme = "light";
     }
