@@ -16,7 +16,7 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { slug } = Astro.params;
-const { Content, headings } = await render(post);
+const { Content, headings, remarkPluginFrontmatter } = await render(post);
 
 // 计算阅读时间
 const words = post.body?.replace(/\s+/g, "").length ?? 0;
@@ -40,7 +40,9 @@ const minutes = Math.ceil(words / 200);
     {post.data.title}
   </h1>
   <p class="text-default-500">
-    {dayjs(post.data.pubDate).format("MM-DD")}. {minutes} 分钟
+    {dayjs(post.data.pubDate).format("MM-DD")}. {
+      remarkPluginFrontmatter.minutesRead
+    } 分钟
   </p>
   {post.data.toc && <Toc toc={headings} />}
   <Content />
