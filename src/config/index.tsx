@@ -34,6 +34,12 @@ export const Config: BlogConfig = {
       desc: "分享设计与科技生活",
       avatar: "https://bu.dusays.com/2022/12/28/63ac2812183aa.png",
     },
+    {
+      name: "凌飞阁",
+      url: "https://llingfei.com",
+      desc: "烂柯山与浮云齐，突星骑石凌飞鸟。",
+      avatar: "https://llingfei.com/tx.jpg",
+    },
   ],
   menus: [
     {
