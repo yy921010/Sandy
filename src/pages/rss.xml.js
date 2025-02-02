@@ -16,6 +16,7 @@ export async function GET(context) {
       pubDate: post.data.pubDate,
       description: post.data.description,
       link: `/post/${replaceSlash(post.id)}/`,
+      content: post.body
     })),
   });
 }
