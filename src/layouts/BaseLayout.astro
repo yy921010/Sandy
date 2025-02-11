@@ -9,7 +9,6 @@ export interface Props {
   path?: string;
   pubDate?: string;
 }
-import HeadTag from "~/components/HeadTag.astro";
 import RiverBackground from "~/components/RiverBackground";
 import SpeedInsights from "@vercel/speed-insights/astro";
 import Analytics from "@vercel/analytics/astro";
@@ -18,6 +17,7 @@ import type { Menu } from "~/types/config";
 import { removeSlash } from "~/utils/common";
 import { Config } from "~/config";
 import Footer from "~/components/Footer.astro";
+import SEO from "~/components/SEO.astro";
 
 const processMenuItem = (menu: Menu) => {
   if (!menu.children?.length) {
@@ -49,7 +49,7 @@ const isDev = process.env.NODE_ENV === "development";
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#000000" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <HeadTag {...Astro.props} />
+    <SEO {...Astro.props} />
     <SpeedInsights />
     <Analytics debug={isDev} />
     <ClientRouter />
