@@ -22,35 +22,30 @@ const articleTimeFormat = dayjs(pubDate).format("YYYY-MM-DD");
 
 <link rel="sitemap" href="/sitemap-index.xml" />
 <title>{title}</title>
+{description && <meta name="description" content={description} />}
 <!-- 开放图谱标签 -->
 <meta property="og:title" content={title} />
 <meta property="og:type" content="website" />
-<meta property="article:author" content={Config.base.author} />
+{description && <meta property="og:description" content={description} />}
 {
-  description && (
-    <>
-      <meta name="description" content={description} />
-      <meta property="og:description" content={description} />
-      <meta name="twitter:description" content={description} />
-    </>
+  path && (
+    <meta property="og:site_name" content={`${Config.base.baseUrl}${path}`} />
+    <meta property="og:url" content={`${Config.base.baseUrl}${path}`}  />
   )
 }
 {
-  path && (
-    <>
-      <meta content={`${Config.base.baseUrl}${path}`} property="og:url" />
-      <meta property="og:site_name" content={`${Config.base.baseUrl}${path}`} />
-    </>
-  )
+ snapshot && (
+   <meta property="og:image" content={`${Config.base.baseUrl}/post/${snapshot}/index.png`} />
+   <meta property="og:image:alt" content={description} />
+ )
+}
+<meta name="twitter:title" content={title} />
+{
+  description &&  <meta name="twitter:description" content={description} />
 }
 {
   snapshot && (
     <>
-      <meta
-        property="og:image"
-        content={`${Config.base.baseUrl}/post/${snapshot}/index.png`}
-      />
-      <meta property="og:image:alt" content={description} />
       <meta
         name="twitter:image"
         content={`${Config.base.baseUrl}/post/${snapshot}/index.png`}
@@ -59,6 +54,7 @@ const articleTimeFormat = dayjs(pubDate).format("YYYY-MM-DD");
     </>
   )
 }
+<meta property="article:author" content={Config.base.author} />
 {
   pubDate && (
     <>
