@@ -8,6 +8,7 @@ export interface Props {
   snapshot?: string;
   path?: string;
   pubDate?: string;
+  schema?: any;
 }
 import RiverBackground from "~/components/RiverBackground";
 import SpeedInsights from "@vercel/speed-insights/astro";
@@ -18,6 +19,7 @@ import { removeSlash } from "~/utils/common";
 import { Config } from "~/config";
 import Footer from "~/components/Footer.astro";
 import SEO from "~/components/SEO.astro";
+import { generateWebSiteSchema, generatePersonSchema } from "~/utils/schema";
 
 const processMenuItem = (menu: Menu) => {
   if (!menu.children?.length) {
@@ -50,6 +52,22 @@ const isDev = process.env.NODE_ENV === "development";
     <meta name="theme-color" content="#000000" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <SEO {...Astro.props} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(generateWebSiteSchema())}
+    />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(generatePersonSchema())}
+    />
+    {
+      Astro.props.schema && (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(Astro.props.schema)}
+        />
+      )
+    }
     <SpeedInsights />
     <Analytics debug={isDev} />
     <ClientRouter />
