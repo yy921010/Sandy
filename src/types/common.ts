@@ -12,3 +12,9 @@ export interface TOCItem {
 }
 
 export type CollectionType = "life" | "log" | "note" | "tech";
+
+export type CardType = {
+  title: string;
+  subtitle: string;
+  image: string;
+};

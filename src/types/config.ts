@@ -23,6 +23,13 @@ export type Partner = {
   desc: string;
 };
 
+export type Sample = {
+  title: string;
+  subtitle: string;
+  image: string;
+  url: string;
+};
+
 export type BlogConfig = {
   base: BaseConfig;
   menus: Menu[];
@@ -31,4 +38,5 @@ export type BlogConfig = {
     email: string;
   };
   partnerLinks: Partner[];
+  samples: Sample[];
 };
