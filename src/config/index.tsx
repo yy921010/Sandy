@@ -11,6 +11,14 @@ export const Config: BlogConfig = {
     github: "https://github.com/charsm",
     email: "mailto:charlesmaxwellyoung@gmail.com",
   },
+  samples: [
+    {
+      title: "Ethan Young",
+      subtitle: "My blog",
+      image: "https://home.matrixpunk.com:9800/i/2025/03/09/67cd822b5ec90.gif",
+      url: "https://ethyoung.me",
+    },
+  ],
   partnerLinks: [
     {
       name: "花墨",
@@ -65,6 +73,11 @@ export const Config: BlogConfig = {
       title: "友链",
       url: "/partner-link",
       key: "partnerLink",
+    },
+    {
+      title: "Sample",
+      url: "/sample",
+      key: "sample",
     },
   ],
 };

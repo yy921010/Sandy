@@ -1,0 +1,39 @@
+---
+import HomeLayout from "~/layouts/HomeLayout.astro";
+import UICard from "~/components/Card";
+import { Config } from "~/config";
+---
+
+<HomeLayout
+  title="Sample"
+  description="我的作品"
+  file=""
+  url=""
+  headings={[]}
+  frontmatter={{
+    file: "",
+    url: undefined,
+    title: "Sample",
+    description: "我的作品",
+  }}
+  rawContent={() => ""}
+  compiledContent={() => Promise.resolve("")}
+>
+  <h1>Sample</h1>
+  <p>我的作品</p>
+  <div class="gap-2 grid grid-cols-12 grid-rows-2">
+    {
+      Config.samples.map((item) => {
+        return (
+          <UICard
+            url={item.url}
+            client:visible
+            title={item.title}
+            subtitle={item.subtitle}
+            image={item.image}
+          />
+        );
+      })
+    }
+  </div>
+</HomeLayout>
