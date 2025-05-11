@@ -3,116 +3,165 @@ import { Moon, Sun } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { themeAtom } from "~/store";
 
+// 为 window 添加全局方法类型声明
+declare global {
+	interface Window {
+		syncTheme?: () => void;
+	}
+}
+
 const ThemeSwitcher: React.FC = () => {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-  const buttonRef = useRef<HTMLButtonElement>(null);
+	const [theme, setTheme] = useState<"light" | "dark">("light");
+	const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const getSystemTheme = (): "light" | "dark" => {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  };
+	// 将这些函数用 useCallback 包装，避免重复创建
+	const getSystemTheme = React.useCallback((): "light" | "dark" => {
+		return window.matchMedia("(prefers-color-scheme: dark)").matches
+			? "dark"
+			: "light";
+	}, []);
 
-  const initTheme = (): "light" | "dark" => {
-    const localTheme = window.localStorage.getItem("theme");
-    return localTheme === "auto"
-      ? getSystemTheme()
-      : (localTheme as "light" | "dark") || "light";
-  };
+	const initTheme = React.useCallback((): "light" | "dark" => {
+		const localTheme = window.localStorage.getItem("theme");
+		return localTheme === "auto"
+			? getSystemTheme()
+			: (localTheme as "light" | "dark") || "light";
+	}, [getSystemTheme]);
 
-  const updateTheme = (newTheme: "light" | "dark"): void => {
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(newTheme);
-    document.documentElement.style.colorScheme = newTheme;
-    document.documentElement.setAttribute("data-theme", newTheme);
-    themeAtom.set(newTheme);
-    setTheme(newTheme);
-    const metaThemeColor = document.querySelector(
-      'meta[name="theme-color"]'
-    ) as HTMLMetaElement | null;
-    if (metaThemeColor) {
-      metaThemeColor.setAttribute(
-        "content",
-        newTheme === "dark" ? "#000000" : "#ffffff"
-      );
-    }
-    window.localStorage.setItem("theme", newTheme);
-  };
+	// 更新主题的统一方法，使用全局 syncTheme 函数确保与 BaseLayout 保持一致
+	const updateTheme = (newTheme: "light" | "dark"): void => {
+		// 使用状态管理更新组件状态
+		themeAtom.set(newTheme);
+		setTheme(newTheme);
 
-  const animateThemeTransition = async (
-    x: number,
-    y: number
-  ): Promise<void> => {
-    if (!document.startViewTransition) {
-      return;
-    }
+		// 保存用户设置
+		window.localStorage.setItem("theme", newTheme);
 
-    const radius = Math.hypot(
-      Math.max(x, innerWidth - x),
-      Math.max(y, innerHeight - y)
-    );
+		// 使用全局同步函数更新DOM，避免重复主题设置逻辑
+		if (window.syncTheme) {
+			window.syncTheme();
+		} else {
+			// 降级方案，直接设置主题
+			document.documentElement.classList.remove("light", "dark");
+			document.documentElement.classList.add(newTheme);
+			document.documentElement.style.colorScheme = newTheme;
+			document.documentElement.setAttribute("data-theme", newTheme);
 
-    const clipPath = [
-      `circle(0px at ${x}px ${y}px)`,
-      `circle(${radius}px at ${x}px ${y}px)`,
-    ];
+			const metaThemeColor = document.querySelector(
+				'meta[name="theme-color"]',
+			) as HTMLMetaElement | null;
+			if (metaThemeColor) {
+				metaThemeColor.setAttribute(
+					"content",
+					newTheme === "dark" ? "#000000" : "#ffffff",
+				);
+			}
+		}
+	};
 
-    try {
-      const transition = document.startViewTransition(async () => {
-        const newTheme = theme === "dark" ? "light" : "dark";
-        updateTheme(newTheme);
-      });
+	const animateThemeTransition = async (
+		x: number,
+		y: number,
+	): Promise<void> => {
+		if (!document.startViewTransition) {
+			// 降级：直接切换主题
+			const newTheme = theme === "dark" ? "light" : "dark";
+			updateTheme(newTheme);
+			return;
+		}
 
-      await transition.ready;
+		// 添加和移除 no-transition 类来防止过渡期间的闪烁
+		document.documentElement.classList.add("no-transition");
+		setTimeout(() => {
+			document.documentElement.classList.remove("no-transition");
+		}, 0);
 
-      await document.documentElement.animate(
-        { clipPath: theme === "dark" ? clipPath : clipPath.reverse() },
-        {
-          duration: 400,
-          easing: "ease-in-out",
-          pseudoElement:
-            theme === "dark"
-              ? "::view-transition-new(root)"
-              : "::view-transition-old(root)",
-        }
-      ).finished;
-    } catch (error) {
-      console.error("Animation failed:", error);
-    }
-  };
+		const radius = Math.hypot(
+			Math.max(x, innerWidth - x),
+			Math.max(y, innerHeight - y),
+		);
 
-  const handleThemeChange = async () => {
-    const rect = buttonRef.current?.getBoundingClientRect();
-    if (rect) {
-      await animateThemeTransition(
-        rect.x + rect.width / 2,
-        rect.y + rect.height / 2
-      );
-    }
-  };
+		const clipPath = [
+			`circle(0px at ${x}px ${y}px)`,
+			`circle(${radius}px at ${x}px ${y}px)`,
+		];
 
-  useEffect(() => {
-    const currentTheme = initTheme();
-    updateTheme(currentTheme);
-  }, []);
+		try {
+			// 在视图过渡中切换主题
+			const newTheme = theme === "dark" ? "light" : "dark";
+			const transition = document.startViewTransition(async () => {
+				updateTheme(newTheme);
+			});
 
-  return (
-    <Button
-      variant="light"
-      isIconOnly
-      ref={buttonRef}
-      onPress={handleThemeChange}
-      className="p-2 transition-colors duration-300"
-    >
-      <div className="transition-opacity duration-300">
-        {theme === "light" ? (
-          <Sun className="h-5 w-5" />
-        ) : (
-          <Moon className="h-5 w-5" />
-        )}
-      </div>
-    </Button>
-  );
+			await transition.ready;
+
+			// 使用更短的动画时长，降低与页面切换冲突的概率
+			await document.documentElement.animate(
+				{ clipPath: theme === "dark" ? clipPath : clipPath.reverse() },
+				{
+					duration: 350, // 缩短动画时间
+					easing: "ease-out",
+					pseudoElement:
+						theme === "dark"
+							? "::view-transition-new(root)"
+							: "::view-transition-old(root)",
+				},
+			).finished;
+		} catch (error) {
+			console.error("Animation failed:", error);
+			// 出错时也确保主题切换成功
+			const newTheme = theme === "dark" ? "light" : "dark";
+			updateTheme(newTheme);
+		}
+	};
+
+	const handleThemeChange = async () => {
+		const rect = buttonRef.current?.getBoundingClientRect();
+		if (rect) {
+			await animateThemeTransition(
+				rect.x + rect.width / 2,
+				rect.y + rect.height / 2,
+			);
+		}
+	};
+
+	// 组件挂载时设置初始主题状态
+	useEffect(() => {
+		const currentTheme = initTheme();
+		setTheme(currentTheme);
+		themeAtom.set(currentTheme);
+
+		// 监听主题变化（例如系统主题改变）
+		const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+		const handleChange = () => {
+			if (localStorage.getItem("theme") === "auto") {
+				const systemTheme = getSystemTheme();
+				setTheme(systemTheme);
+				themeAtom.set(systemTheme);
+			}
+		};
+
+		mediaQuery.addEventListener("change", handleChange);
+		return () => mediaQuery.removeEventListener("change", handleChange);
+	}, [initTheme, getSystemTheme]);
+
+	return (
+		<Button
+			variant="light"
+			isIconOnly
+			ref={buttonRef}
+			onPress={handleThemeChange}
+			className="p-2 transition-colors duration-300"
+		>
+			<div className="transition-opacity duration-300">
+				{theme === "light" ? (
+					<Sun className="h-5 w-5" />
+				) : (
+					<Moon className="h-5 w-5" />
+				)}
+			</div>
+		</Button>
+	);
 };
 
 export default ThemeSwitcher;

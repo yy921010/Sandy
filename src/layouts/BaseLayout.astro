@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import "@fontsource/noto-sans";
+import "../styles/global.css";
 
 export interface Props {
   title?: string;
@@ -8,6 +9,7 @@ export interface Props {
   snapshot?: string;
   path?: string;
   pubDate?: string;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   schema?: any;
 }
 import RiverBackground from "~/components/RiverBackground";
@@ -43,7 +45,7 @@ const mainMenus = Config.menus.map(processMenuItem);
 const isDev = process.env.NODE_ENV === "development";
 ---
 
-<html lang="en">
+<html lang="zh-CN" class="no-transition">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -74,6 +76,7 @@ const isDev = process.env.NODE_ENV === "development";
 
     <script is:inline>
       (function () {
+        // 尽早运行以防止FOUC (Flash of Unstyled Content)
         const storedTheme = window.localStorage.getItem("theme") ?? "auto";
         let presetTheme;
         if (storedTheme === "auto") {
@@ -84,19 +87,74 @@ const isDev = process.env.NODE_ENV === "development";
         } else {
           presetTheme = storedTheme;
         }
-        // 根据实际主题设置 meta[name="theme-color"] 的值
-        const metaThemeColor = document.querySelector(
-          'meta[name="theme-color"]'
-        );
+        
+        // 设置主题相关的所有属性
         if (presetTheme === "dark") {
-          metaThemeColor.setAttribute("content", "#000000");
           document.documentElement.classList.add("dark");
           document.documentElement.style.colorScheme = "dark";
+          document.documentElement.setAttribute("data-theme", "dark");
         } else {
-          metaThemeColor.setAttribute("content", "#ffffff");
           document.documentElement.classList.remove("dark");
           document.documentElement.style.colorScheme = "light";
+          document.documentElement.setAttribute("data-theme", "light");
         }
+        
+        // 设置 meta theme-color
+        const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+        if (metaThemeColor) {
+          metaThemeColor.setAttribute("content", presetTheme === "dark" ? "#000000" : "#ffffff");
+        }
+        
+        // 添加全局主题同步功能
+        window.syncTheme = function() {
+          const currentTheme = localStorage.getItem("theme") ?? "auto";
+          let theme = currentTheme === "auto" 
+            ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+            : currentTheme;
+          
+          // 在应用主题前添加 no-transition 类以防止闪烁
+          document.documentElement.classList.add("no-transition");
+          
+          if (theme === "dark") {
+            document.documentElement.classList.add("dark");
+            document.documentElement.style.colorScheme = "dark";
+            document.documentElement.setAttribute("data-theme", "dark");
+            metaThemeColor?.setAttribute("content", "#000000");
+          } else {
+            document.documentElement.classList.remove("dark");
+            document.documentElement.style.colorScheme = "light";
+            document.documentElement.setAttribute("data-theme", "light");
+            metaThemeColor?.setAttribute("content", "#ffffff");
+          }
+          
+          // 允许DOM更新后移除 no-transition 类
+          setTimeout(() => {
+            document.documentElement.classList.remove("no-transition");
+          }, 0);
+        };
+        
+        // 添加 Astro 页面切换相关事件监听器
+        document.addEventListener("astro:before-preparation", function() {
+          // 页面切换前禁用所有过渡效果
+          document.documentElement.classList.add("no-transition");
+        });
+        
+        document.addEventListener("astro:after-preparation", function() {
+          // 预加载完成后同步主题，避免在渲染过程中变化
+          window.syncTheme();
+        });
+        
+        document.addEventListener("astro:after-swap", function() {
+          // 页面内容替换后立即同步主题
+          window.syncTheme();
+        });
+        
+        document.addEventListener("astro:page-load", function() {
+          // 页面加载完成后移除过渡限制
+          setTimeout(() => {
+            document.documentElement.classList.remove("no-transition");
+          }, 0);
+        });
       })();
     </script>
   </head>

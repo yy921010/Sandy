@@ -1,0 +1,8 @@
+/* 在主题切换时禁用过渡效果 */
+.no-transition,
+.no-transition *,
+.no-transition *::before,
+.no-transition *::after {
+  transition: none !important;
+  animation: none !important;
+}

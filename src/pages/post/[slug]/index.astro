@@ -18,9 +18,8 @@ const { post } = Astro.props;
 const { slug } = Astro.params;
 const { Content, headings, remarkPluginFrontmatter } = await render(post);
 
-// 计算阅读时间
-const words = post.body?.replace(/\s+/g, "").length ?? 0;
-const minutes = Math.ceil(words / 200);
+const readTime = Math.round(remarkPluginFrontmatter.minutesRead);
+
 ---
 
 <PostLayout
@@ -41,7 +40,7 @@ const minutes = Math.ceil(words / 200);
   </h1>
   <p class="text-default-500">
     {dayjs(post.data.pubDate).format("MM-DD")}. {
-      remarkPluginFrontmatter.minutesRead
+      readTime
     } 分钟
   </p>
   {post.data.toc && <Toc toc={headings} />}
