@@ -70,11 +70,16 @@ const ThemeSwitcher: React.FC = () => {
 			return;
 		}
 
-		// 添加和移除 no-transition 类来防止过渡期间的闪烁
+		// 添加 no-transition 类来防止过渡期间的闪烁
+		// 确保在页面切换期间不会有主题转换动画
 		document.documentElement.classList.add("no-transition");
-		setTimeout(() => {
-			document.documentElement.classList.remove("no-transition");
-		}, 0);
+		
+		// 延迟执行移除操作，确保主题变更已完成
+		const removeNoTransition = () => {
+			setTimeout(() => {
+				document.documentElement.classList.remove("no-transition");
+			}, 50);
+		};
 
 		const radius = Math.hypot(
 			Math.max(x, innerWidth - x),
@@ -87,8 +92,18 @@ const ThemeSwitcher: React.FC = () => {
 		];
 
 		try {
+			// 检查是否有正在进行的页面切换
+			const isPageTransitioning = document.readyState !== 'complete' || document.documentElement.classList.contains("astro-transitioning");
+			
 			// 在视图过渡中切换主题
 			const newTheme = theme === "dark" ? "light" : "dark";
+			
+			// 如果当前有页面切换在进行中，则直接更新主题而不使用动画
+			if (isPageTransitioning) {
+				updateTheme(newTheme);
+				return;
+			}
+			
 			const transition = document.startViewTransition(async () => {
 				updateTheme(newTheme);
 			});
@@ -99,7 +114,7 @@ const ThemeSwitcher: React.FC = () => {
 			await document.documentElement.animate(
 				{ clipPath: theme === "dark" ? clipPath : clipPath.reverse() },
 				{
-					duration: 350, // 缩短动画时间
+					duration: 300, // 进一步缩短动画时间
 					easing: "ease-out",
 					pseudoElement:
 						theme === "dark"
@@ -107,11 +122,16 @@ const ThemeSwitcher: React.FC = () => {
 							: "::view-transition-old(root)",
 				},
 			).finished;
+			
+			// 动画完成后移除无过渡类
+			removeNoTransition();
 		} catch (error) {
 			console.error("Animation failed:", error);
 			// 出错时也确保主题切换成功
 			const newTheme = theme === "dark" ? "light" : "dark";
 			updateTheme(newTheme);
+			// 即使出错也要移除无过渡类
+			removeNoTransition();
 		}
 	};
 

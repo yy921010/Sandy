@@ -5,4 +5,8 @@
 .no-transition *::after {
   transition: none !important;
   animation: none !important;
+  /* 确保在过渡期间不会有闪烁 */
+  -webkit-transition: none !important;
+  backface-visibility: hidden !important;
+  will-change: auto !important;
 }

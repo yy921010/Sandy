@@ -115,28 +115,37 @@ const isDev = process.env.NODE_ENV === "development";
           // 在应用主题前添加 no-transition 类以防止闪烁
           document.documentElement.classList.add("no-transition");
           
+          // 移除所有主题相关类名，避免冲突
+          document.documentElement.classList.remove("dark", "light");
+          
           if (theme === "dark") {
             document.documentElement.classList.add("dark");
             document.documentElement.style.colorScheme = "dark";
             document.documentElement.setAttribute("data-theme", "dark");
             metaThemeColor?.setAttribute("content", "#000000");
           } else {
-            document.documentElement.classList.remove("dark");
+            document.documentElement.classList.add("light");
             document.documentElement.style.colorScheme = "light";
             document.documentElement.setAttribute("data-theme", "light");
             metaThemeColor?.setAttribute("content", "#ffffff");
           }
           
-          // 允许DOM更新后移除 no-transition 类
+          // 使用稍长的延时确保DOM完全更新后再移除no-transition类
+          // 避免在页面切换过程中的闪烁
           setTimeout(() => {
-            document.documentElement.classList.remove("no-transition");
-          }, 0);
+            // 确保文档已经准备好
+            if (document.readyState === 'complete') {
+              document.documentElement.classList.remove("no-transition");
+            }
+          }, 50);
         };
         
         // 添加 Astro 页面切换相关事件监听器
         document.addEventListener("astro:before-preparation", function() {
           // 页面切换前禁用所有过渡效果
           document.documentElement.classList.add("no-transition");
+          // 标记页面正在过渡中
+          document.documentElement.classList.add("astro-transitioning");
         });
         
         document.addEventListener("astro:after-preparation", function() {
@@ -144,16 +153,25 @@ const isDev = process.env.NODE_ENV === "development";
           window.syncTheme();
         });
         
+        document.addEventListener("astro:before-swap", function() {
+          // 确保内容交换前主题已经准备好
+          document.documentElement.classList.add("no-transition");
+        });
+        
         document.addEventListener("astro:after-swap", function() {
-          // 页面内容替换后立即同步主题
+          // 页面内容替换后立即同步主题，但保持过渡禁用
           window.syncTheme();
         });
         
         document.addEventListener("astro:page-load", function() {
-          // 页面加载完成后移除过渡限制
+          // 移除过渡状态标记
+          document.documentElement.classList.remove("astro-transitioning");
+          
+          // 页面完全加载后延迟一些时间再移除过渡限制
+          // 给主题切换留出足够时间应用样式
           setTimeout(() => {
             document.documentElement.classList.remove("no-transition");
-          }, 0);
+          }, 100);
         });
       })();
     </script>
@@ -174,11 +192,18 @@ const isDev = process.env.NODE_ENV === "development";
   }
   body {
     margin-right: calc(100vw - 100%);
+    /* 添加以下属性改善页面渲染性能 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    backface-visibility: hidden;
   }
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation: none;
     mix-blend-mode: normal;
+    /* 避免闪烁 */
+    will-change: transform;
+    backface-visibility: hidden;
   }
   ::view-transition-old(root) {
     z-index: 1;
@@ -191,6 +216,10 @@ const isDev = process.env.NODE_ENV === "development";
   }
   .dark::view-transition-new(root) {
     z-index: 1;
+  }
+  /* 添加页面过渡控制 */
+  .astro-transitioning {
+    view-transition-name: none;
   }
 
   @keyframes slide-in {
