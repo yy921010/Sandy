@@ -3,12 +3,10 @@ const copyright = "CC BY-NC-SA 4.0";
 import { Config } from "~/config";
 const copyrightUrl = "https://creativecommons.org/licenses/by-nc-sa/4.0/";
 ---
-
-<footer class="text-center text-content4-foreground p-4">
-  <aside>
+<footer class="footer sm:footer-horizontal bg-base-200 text-base-content/50 items-center  p-4 justify-center">
+  <aside class="grid-flow-col items-center">
     <p>
-      <a href={copyrightUrl} class="link link-info">{copyright}</a> © {new Date().getFullYear()}
-      - All right reserved by {Config.base.title}
-    </p>
+       <a href={copyrightUrl} class="link link-info">{copyright}</a> © {new Date().getFullYear()}
+      Copyright © {new Date().getFullYear()} - {Config.base.title} All right reserved</p>
   </aside>
 </footer>

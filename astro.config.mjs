@@ -33,4 +33,5 @@ export default defineConfig({
       enabled: true,
     },
   }),
+  viewTransitions: true,
 });

@@ -25,7 +25,7 @@ export const Toc = ({ toc }: { toc: TOCItem[] }) => {
   }
   return (
     <div className="m-auto fixed top-24 left-5 pb-3 z-50 overflow-hidden text-sm hidden h-3/4 flex-col md:flex">
-      <a className="btn btn-ghost btn-circle">
+      <a className="btn btn-ghost btn-circle" href="#toc">
         <TableOfContents size={20} />
       </a>
       <div

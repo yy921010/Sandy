@@ -29,12 +29,7 @@ const readTime = Math.round(remarkPluginFrontmatter.minutesRead);
   path={`/post/${slug}`}
   pubDate={post.data.pubDate.toString()}
 >
-  <div
-    onclick="window.history.back()"
-    class="text-default-400 cursor-pointer py-6 hover:text-default-600 transition-colors text-lg"
-  >
-    cd ..
-  </div>
+
   <h1 transition:name={`post-index-id-${replaceSlash(post.id)}`}>
     {post.data.title}
   </h1>
@@ -45,5 +40,11 @@ const readTime = Math.round(remarkPluginFrontmatter.minutesRead);
   </p>
   {post.data.toc && <Toc toc={headings} />}
   <Content />
+    <div
+    onclick="window.history.back()"
+    class="text-default-400 cursor-pointer py-6 hover:text-default-600 transition-colors text-lg"
+  >
+    cd ..
+  </div>
   {post.data.comment && <Comment client:only="react" />}
 </PostLayout>

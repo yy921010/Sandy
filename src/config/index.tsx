@@ -75,9 +75,9 @@ export const Config: BlogConfig = {
       key: "partnerLink",
     },
     {
-      title: "Sample",
-      url: "/sample",
-      key: "sample",
+      title: "Projects",
+      url: "/projects",
+      key: "project",
     },
   ],
 };

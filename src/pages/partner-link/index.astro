@@ -28,11 +28,14 @@ import { Config } from "~/config";
         return (
           <a href={link.url} class="flex gap-2 link link-info">
             <div class="avatar">
-              <div class="ring-primary ring-offset-base-100 w-9 rounded-full ring-2 ring-offset-2">
-                <img src={link.avatar} alt="avatar" class="!m-0" />
+              <div class="ring-primary ring-offset-base-100 w-9 rounded-full ring-2 ring-offset-2 relative bg-accent/10">
+                <div style={
+                  `background-image: url(${link.avatar}); background-size: cover; background-position: center; width: 100%; height: 100%; border-radius: 50%;`
+                }></div>
+                <span class="top-1/2 absolute left-1/2 -translate-y-1/2 -translate-x-1/2 -z-10 text-base-content font-bold">{link.name.charAt(0)}</span>
               </div>
             </div>
-            {link.name}
+            <span>{link.name}</span>
           </a>
         );
       })

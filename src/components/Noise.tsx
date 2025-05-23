@@ -1,82 +1,82 @@
 import { useRef, useEffect } from "react";
 
 const Noise = ({
-	patternSize = 250,
-	patternScaleX = 1,
-	patternScaleY = 1,
-	patternRefreshInterval = 2,
-	patternAlpha = 15,
+  patternSize = 250,
+  patternScaleX = 1,
+  patternScaleY = 1,
+  patternRefreshInterval = 2,
+  patternAlpha = 15,
 }) => {
-	const grainRef = useRef<HTMLCanvasElement>(null);
+  const grainRef = useRef<HTMLCanvasElement>(null);
 
-	useEffect(() => {
-		const canvas = grainRef.current;
-		if (!canvas) return;
-		const ctx = canvas.getContext("2d");
-		if (!ctx) return;
-		let frame = 0;
+  useEffect(() => {
+    const canvas = grainRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    let frame = 0;
 
-		const patternCanvas = document.createElement("canvas");
-		patternCanvas.width = patternSize;
-		patternCanvas.height = patternSize;
-		const patternCtx = patternCanvas.getContext("2d");
-		if (!patternCtx) return;
-		const patternData = patternCtx.createImageData(patternSize, patternSize);
-		const patternPixelDataLength = patternSize * patternSize * 4;
+    const patternCanvas = document.createElement("canvas");
+    patternCanvas.width = patternSize;
+    patternCanvas.height = patternSize;
+    const patternCtx = patternCanvas.getContext("2d");
+    if (!patternCtx) return;
+    const patternData = patternCtx.createImageData(patternSize, patternSize);
+    const patternPixelDataLength = patternSize * patternSize * 4;
 
-		const resize = () => {
-			canvas.width = window.innerWidth * window.devicePixelRatio;
-			canvas.height = window.innerHeight * window.devicePixelRatio;
+    const resize = () => {
+      canvas.width = window.innerWidth * window.devicePixelRatio;
+      canvas.height = window.innerHeight * window.devicePixelRatio;
 
-			ctx.scale(patternScaleX, patternScaleY);
-		};
+      ctx.scale(patternScaleX, patternScaleY);
+    };
 
-		const updatePattern = () => {
-			for (let i = 0; i < patternPixelDataLength; i += 4) {
-				const value = Math.random() * 255;
-				patternData.data[i] = value;
-				patternData.data[i + 1] = value;
-				patternData.data[i + 2] = value;
-				patternData.data[i + 3] = patternAlpha;
-			}
-			patternCtx.putImageData(patternData, 0, 0);
-		};
+    const updatePattern = () => {
+      for (let i = 0; i < patternPixelDataLength; i += 4) {
+        const value = Math.random() * 255;
+        patternData.data[i] = value;
+        patternData.data[i + 1] = value;
+        patternData.data[i + 2] = value;
+        patternData.data[i + 3] = patternAlpha;
+      }
+      patternCtx.putImageData(patternData, 0, 0);
+    };
 
-		const drawGrain = () => {
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			const pattern = ctx.createPattern(patternCanvas, "repeat");
-			if (pattern) {
-				ctx.fillStyle = pattern;
-			}
-			ctx.fillRect(0, 0, canvas.width, canvas.height);
-		};
+    const drawGrain = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const pattern = ctx.createPattern(patternCanvas, "repeat");
+      if (pattern) {
+        ctx.fillStyle = pattern;
+      }
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    };
 
-		const loop = () => {
-			if (frame % patternRefreshInterval === 0) {
-				updatePattern();
-				drawGrain();
-			}
-			frame++;
-			animationFrameId = window.requestAnimationFrame(loop);
-		};
+    const loop = () => {
+      if (frame % patternRefreshInterval === 0) {
+        updatePattern();
+        drawGrain();
+      }
+      frame++;
+      animationFrameId = window.requestAnimationFrame(loop);
+    };
 
-		window.addEventListener("resize", resize);
-		resize();
-		let animationFrameId = window.requestAnimationFrame(loop);
+    window.addEventListener("resize", resize);
+    resize();
+    let animationFrameId = window.requestAnimationFrame(loop);
 
-		return () => {
-			window.removeEventListener("resize", resize);
-			window.cancelAnimationFrame(animationFrameId);
-		};
-	}, [
-		patternSize,
-		patternScaleX,
-		patternScaleY,
-		patternRefreshInterval,
-		patternAlpha,
-	]);
+    return () => {
+      window.removeEventListener("resize", resize);
+      window.cancelAnimationFrame(animationFrameId);
+    };
+  }, [
+    patternSize,
+    patternScaleX,
+    patternScaleY,
+    patternRefreshInterval,
+    patternAlpha,
+  ]);
 
-	return <canvas className="absolute inset-0 w-full h-full" ref={grainRef} />;
+  return <canvas className="absolute inset-0 w-full h-full" ref={grainRef} />;
 };
 
 export default Noise;

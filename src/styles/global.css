@@ -1,8 +1,7 @@
+/* 使用Tailwind CSS 4.x的正确语法 */
 @import "tailwindcss";
 @plugin "daisyui";
 @plugin "@tailwindcss/typography";
-/* @plugin "tailwindcss-animate"; */
-/* @plugin "tailwindcss-typography" */
 
 
 /* 在主题切换时禁用过渡效果 */
@@ -17,3 +16,164 @@
   backface-visibility: hidden !important;
   will-change: auto !important;
 }
+
+  html {
+    scroll-behavior: smooth;
+    min-height: 100%;
+  }
+  body {
+    margin-right: calc(100vw - 100%);
+    /* 添加以下属性改善页面渲染性能 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    backface-visibility: hidden;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+    /* 避免闪烁 */
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
+  ::view-transition-old(root) {
+    z-index: 1;
+  }
+  ::view-transition-new(root) {
+    z-index: 9999;
+  }
+  .dark::view-transition-old(root) {
+    z-index: 9999;
+  }
+  .dark::view-transition-new(root) {
+    z-index: 1;
+  }
+  /* 添加页面过渡控制 */
+  .astro-transitioning {
+    view-transition-name: none;
+  }
+  
+  /* 为Astro动画元素添加性能优化 */
+  [transition\\:animate] {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
+
+  /* Astro专用的页面转场动画 - 避免与其他动画冲突 */
+  @keyframes astro-slide-in {
+    0% {
+      transform: translateY(10px);
+      opacity: 0;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+    }
+  }
+
+  @keyframes astro-slide-out {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+    }
+
+    to {
+      transform: translateY(10px);
+      opacity: 0;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+    }
+  }
+
+  :target {
+    padding-top: 20px;
+  }
+  @keyframes slide-enter {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .slide-enter-content > * {
+    --stagger: 0;
+    --delay: 150ms;
+    --start: 0ms;
+    animation: slide-enter 1s both 1;
+    animation-delay: calc(var(--start) + var(--stagger) * var(--delay));
+  }
+
+  .slide-enter-content > *:nth-child(1) {
+    --stagger: 1;
+  }
+  .slide-enter-content > *:nth-child(2) {
+    --stagger: 2;
+  }
+  .slide-enter-content > *:nth-child(3) {
+    --stagger: 3;
+  }
+  .slide-enter-content > *:nth-child(4) {
+    --stagger: 4;
+  }
+  .slide-enter-content > *:nth-child(5) {
+    --stagger: 5;
+  }
+  .slide-enter-content > *:nth-child(6) {
+    --stagger: 6;
+  }
+  .slide-enter-content > *:nth-child(7) {
+    --stagger: 7;
+  }
+  .slide-enter-content > *:nth-child(8) {
+    --stagger: 8;
+  }
+  .slide-enter-content > *:nth-child(9) {
+    --stagger: 9;
+  }
+  .slide-enter-content > *:nth-child(10) {
+    --stagger: 10;
+  }
+  .slide-enter-content > *:nth-child(11) {
+    --stagger: 11;
+  }
+  .slide-enter-content > *:nth-child(12) {
+    --stagger: 12;
+  }
+  .slide-enter-content > *:nth-child(13) {
+    --stagger: 13;
+  }
+  .slide-enter-content > *:nth-child(14) {
+    --stagger: 14;
+  }
+  .slide-enter-content > *:nth-child(15) {
+    --stagger: 15;
+  }
+  .slide-enter-content > *:nth-child(16) {
+    --stagger: 16;
+  }
+  .slide-enter-content > *:nth-child(17) {
+    --stagger: 17;
+  }
+  .slide-enter-content > *:nth-child(18) {
+    --stagger: 18;
+  }
+  .slide-enter-content > *:nth-child(19) {
+    --stagger: 19;
+  }
+  .slide-enter-content > *:nth-child(20) {
+    --stagger: 20;
+  }

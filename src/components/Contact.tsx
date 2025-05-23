@@ -25,10 +25,15 @@ export default function ContactUser() {
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full">
-      <form className="w-full max-w-xs" onSubmit={onSubmit}>
-        <input placeholder="网站名称" name="name" className="input" />
-        <input placeholder="网站地址" name="url" className="input" />
-        <input className="input" name="avatar" placeholder="头像地址" />
+      <form className="w-full max-w-xs flex flex-col gap-4" onSubmit={onSubmit}>
+        <input placeholder="网站名称" name="name" className="input" required />
+        <input placeholder="网站地址" name="url" className="input" required />
+        <input
+          className="input"
+          name="avatar"
+          placeholder="头像地址"
+          required
+        />
         <textarea name="desc" className="textarea" placeholder="网站描述" />
         <div className="flex justify-center w-full mt-4">
           <button type="submit" className="btn btn-primary">

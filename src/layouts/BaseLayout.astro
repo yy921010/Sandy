@@ -41,14 +41,16 @@ const processMenuItem = (menu: Menu) => {
 };
 
 const mainMenus = Config.menus.map(processMenuItem);
+import { themeAtom } from "~/store";
+
 
 const isDev = process.env.NODE_ENV === "development";
 ---
 
-<html lang="zh-CN" class="no-transition">
+<html lang="zh-CN" data-theme="night">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#000000" />
@@ -74,259 +76,14 @@ const isDev = process.env.NODE_ENV === "development";
     <Analytics debug={isDev} />
     <ClientRouter />
 
-    <script is:inline>
-      (function () {
-        // 尽早运行以防止FOUC (Flash of Unstyled Content)
-        const storedTheme = window.localStorage.getItem("theme") ?? "auto";
-        let presetTheme;
-        if (storedTheme === "auto") {
-          presetTheme = window.matchMedia("(prefers-color-scheme: dark)")
-            .matches
-            ? "dark"
-            : "light";
-        } else {
-          presetTheme = storedTheme;
-        }
-        
-        // 设置主题相关的所有属性
-        if (presetTheme === "dark") {
-          document.documentElement.classList.add("dark");
-          document.documentElement.style.colorScheme = "dark";
-          document.documentElement.setAttribute("data-theme", "dark");
-        } else {
-          document.documentElement.classList.remove("dark");
-          document.documentElement.style.colorScheme = "light";
-          document.documentElement.setAttribute("data-theme", "light");
-        }
-        
-        // 设置 meta theme-color
-        const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-        if (metaThemeColor) {
-          metaThemeColor.setAttribute("content", presetTheme === "dark" ? "#000000" : "#ffffff");
-        }
-        
-        // 添加全局主题同步功能
-        window.syncTheme = function() {
-          const currentTheme = localStorage.getItem("theme") ?? "auto";
-          let theme = currentTheme === "auto" 
-            ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-            : currentTheme;
-          
-          // 在应用主题前添加 no-transition 类以防止闪烁
-          document.documentElement.classList.add("no-transition");
-          
-          // 移除所有主题相关类名，避免冲突
-          document.documentElement.classList.remove("dark", "light");
-          
-          if (theme === "dark") {
-            document.documentElement.classList.add("dark");
-            document.documentElement.style.colorScheme = "dark";
-            document.documentElement.setAttribute("data-theme", "dark");
-            metaThemeColor?.setAttribute("content", "#000000");
-          } else {
-            document.documentElement.classList.add("light");
-            document.documentElement.style.colorScheme = "light";
-            document.documentElement.setAttribute("data-theme", "light");
-            metaThemeColor?.setAttribute("content", "#ffffff");
-          }
-          
-          // 使用稍长的延时确保DOM完全更新后再移除no-transition类
-          // 避免在页面切换过程中的闪烁
-          setTimeout(() => {
-            // 确保文档已经准备好
-            if (document.readyState === 'complete') {
-              document.documentElement.classList.remove("no-transition");
-            }
-          }, 50);
-        };
-        
-        // 添加 Astro 页面切换相关事件监听器
-        document.addEventListener("astro:before-preparation", function() {
-          // 页面切换前禁用所有过渡效果
-          document.documentElement.classList.add("no-transition");
-          // 标记页面正在过渡中
-          document.documentElement.classList.add("astro-transitioning");
-        });
-        
-        document.addEventListener("astro:after-preparation", function() {
-          // 预加载完成后同步主题，避免在渲染过程中变化
-          window.syncTheme();
-        });
-        
-        document.addEventListener("astro:before-swap", function() {
-          // 确保内容交换前主题已经准备好
-          document.documentElement.classList.add("no-transition");
-        });
-        
-        document.addEventListener("astro:after-swap", function() {
-          // 页面内容替换后立即同步主题，但保持过渡禁用
-          window.syncTheme();
-        });
-        
-        document.addEventListener("astro:page-load", function() {
-          // 移除过渡状态标记
-          document.documentElement.classList.remove("astro-transitioning");
-          
-          // 页面完全加载后延迟一些时间再移除过渡限制
-          // 给主题切换留出足够时间应用样式
-          setTimeout(() => {
-            document.documentElement.classList.remove("no-transition");
-          }, 100);
-        });
-      })();
-    </script>
   </head>
   <body class="h-screen flex flex-col">
     <RiverBackground client:only="react" />
-    <Navbar brandTitle={Config.base.title} menus={mainMenus} client:visible />
-    <section class="flex flex-col bg-background flex-1">
+    <Navbar brandTitle={Config.base.title} menus={mainMenus}/>
+    <section class="flex flex-col bg-base-100 text-primary flex-1">
       <slot />
     </section>
     <Footer />
   </body>
 </html>
-<style is:global>
-  html {
-    scroll-behavior: smooth;
-    min-height: 100%;
-  }
-  body {
-    margin-right: calc(100vw - 100%);
-    /* 添加以下属性改善页面渲染性能 */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    backface-visibility: hidden;
-  }
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation: none;
-    mix-blend-mode: normal;
-    /* 避免闪烁 */
-    will-change: transform;
-    backface-visibility: hidden;
-  }
-  ::view-transition-old(root) {
-    z-index: 1;
-  }
-  ::view-transition-new(root) {
-    z-index: 9999;
-  }
-  .dark::view-transition-old(root) {
-    z-index: 9999;
-  }
-  .dark::view-transition-new(root) {
-    z-index: 1;
-  }
-  /* 添加页面过渡控制 */
-  .astro-transitioning {
-    view-transition-name: none;
-  }
 
-  @keyframes slide-in {
-    0% {
-      transform: translateY(10px);
-      opacity: 0;
-    }
-
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes slide-out {
-    0% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    to {
-      transform: translateY(10px);
-      opacity: 0;
-    }
-  }
-
-  :target {
-    padding-top: 20px;
-  }
-  @keyframes slide-enter {
-    0% {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  .slide-enter-content > * {
-    --stagger: 0;
-    --delay: 150ms;
-    --start: 0ms;
-    animation: slide-enter 1s both 1;
-    animation-delay: calc(var(--start) + var(--stagger) * var(--delay));
-  }
-
-  .slide-enter-content > *:nth-child(1) {
-    --stagger: 1;
-  }
-  .slide-enter-content > *:nth-child(2) {
-    --stagger: 2;
-  }
-  .slide-enter-content > *:nth-child(3) {
-    --stagger: 3;
-  }
-  .slide-enter-content > *:nth-child(4) {
-    --stagger: 4;
-  }
-  .slide-enter-content > *:nth-child(5) {
-    --stagger: 5;
-  }
-  .slide-enter-content > *:nth-child(6) {
-    --stagger: 6;
-  }
-  .slide-enter-content > *:nth-child(7) {
-    --stagger: 7;
-  }
-  .slide-enter-content > *:nth-child(8) {
-    --stagger: 8;
-  }
-  .slide-enter-content > *:nth-child(9) {
-    --stagger: 9;
-  }
-  .slide-enter-content > *:nth-child(10) {
-    --stagger: 10;
-  }
-  .slide-enter-content > *:nth-child(11) {
-    --stagger: 11;
-  }
-  .slide-enter-content > *:nth-child(12) {
-    --stagger: 12;
-  }
-  .slide-enter-content > *:nth-child(13) {
-    --stagger: 13;
-  }
-  .slide-enter-content > *:nth-child(14) {
-    --stagger: 14;
-  }
-  .slide-enter-content > *:nth-child(15) {
-    --stagger: 15;
-  }
-  .slide-enter-content > *:nth-child(16) {
-    --stagger: 16;
-  }
-  .slide-enter-content > *:nth-child(17) {
-    --stagger: 17;
-  }
-  .slide-enter-content > *:nth-child(18) {
-    --stagger: 18;
-  }
-  .slide-enter-content > *:nth-child(19) {
-    --stagger: 19;
-  }
-  .slide-enter-content > *:nth-child(20) {
-    --stagger: 20;
-  }
-</style>
