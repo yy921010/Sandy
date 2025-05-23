@@ -1,4 +1,3 @@
-import { Avatar } from "@heroui/react";
 import type { Partner } from "~/types/config";
 
 const TiltedScroll = ({ partners }: { partners: Partner[] }) => {
@@ -11,7 +10,11 @@ const TiltedScroll = ({ partners }: { partners: Partner[] }) => {
               key={item.name}
               className="flex items-center gap-2 cursor-pointer rounded-md border border-default-300 p-4 shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-xl"
             >
-              <Avatar src={item.avatar}></Avatar>
+              <div className="avatar">
+                <div className="ring-primary ring-offset-base-100 w-9 rounded-full ring-2 ring-offset-2">
+                  <img src={item.avatar} alt="avatar png" />
+                </div>
+              </div>
               <p className="text-default-500">{item.name}</p>
             </div>
           ))}

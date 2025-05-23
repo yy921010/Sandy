@@ -33,7 +33,7 @@ export const Toc = ({ toc }: { toc: TOCItem[] }) => {
           "flex-1",
           "group-hover/first:opacity-45 opacity-0 transition-transform-opacity",
           "duration-300 ease-in-out transform-gpu group-hover/first:translate-x-0 translate-x-5",
-          "overflow-y-auto h-full pb-10 left-0"
+          "overflow-y-auto h-full pb-10 left-0",
         )}
       >
         {renderTOC(renderToc)}

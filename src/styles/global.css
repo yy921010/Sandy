@@ -1,3 +1,10 @@
+@import "tailwindcss";
+@plugin "daisyui";
+@plugin "@tailwindcss/typography";
+/* @plugin "tailwindcss-animate"; */
+/* @plugin "tailwindcss-typography" */
+
+
 /* 在主题切换时禁用过渡效果 */
 .no-transition,
 .no-transition *,

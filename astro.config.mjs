@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
+import tailwind from "@tailwindcss/vite";
 import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
@@ -23,7 +23,10 @@ export default defineConfig({
       [rehypeAutolinkHeadings, { behavior: "append" }],
     ],
   },
-  integrations: [react(), tailwind(), mdx(), sitemap()],
+  vite: {
+    plugins: [tailwind()],
+  },
+  integrations: [react(), mdx(), sitemap()],
   output: "static",
   adapter: vercel({
     webAnalytics: {

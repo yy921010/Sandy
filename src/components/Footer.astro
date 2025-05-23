@@ -1,6 +1,5 @@
 ---
 const copyright = "CC BY-NC-SA 4.0";
-import { Link } from "@heroui/react";
 import { Config } from "~/config";
 const copyrightUrl = "https://creativecommons.org/licenses/by-nc-sa/4.0/";
 ---
@@ -8,7 +7,7 @@ const copyrightUrl = "https://creativecommons.org/licenses/by-nc-sa/4.0/";
 <footer class="text-center text-content4-foreground p-4">
   <aside>
     <p>
-      <Link href={copyrightUrl}>{copyright}</Link> © {new Date().getFullYear()}
+      <a href={copyrightUrl} class="link link-info">{copyright}</a> © {new Date().getFullYear()}
       - All right reserved by {Config.base.title}
     </p>
   </aside>

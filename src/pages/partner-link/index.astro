@@ -2,8 +2,6 @@
 import HomeLayout from "~/layouts/HomeLayout.astro";
 import Contact from "~/components/Contact";
 import { Config } from "~/config";
-import { Avatar, Link } from "@heroui/react";
-import TiltedScroll from "~/components/TiltedScroll";
 ---
 
 <HomeLayout
@@ -28,15 +26,18 @@ import TiltedScroll from "~/components/TiltedScroll";
     {
       Config.partnerLinks.map((link) => {
         return (
-          <Link href={link.url} key={link.name} className="flex gap-2">
-            <Avatar src={link.avatar} client:visible />
+          <a href={link.url} class="flex gap-2 link link-info">
+            <div class="avatar">
+              <div class="ring-primary ring-offset-base-100 w-9 rounded-full ring-2 ring-offset-2">
+                <img src={link.avatar} alt="avatar" class="!m-0" />
+              </div>
+            </div>
             {link.name}
-          </Link>
+          </a>
         );
       })
     }
   </div>
-  <TiltedScroll client:visible partners={Config.partnerLinks} />
   <div class="w-full pt-40">
     <Contact client:visible />
   </div>
