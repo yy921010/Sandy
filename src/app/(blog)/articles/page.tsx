@@ -54,7 +54,7 @@ export default async function Page() {
           .map(([year, yearArticles]) => (
             <div key={year} className="relative">
               {/* 年份背景 */}
-              <div className="absolute -left-8 md:-left-4 top-0 text-[8rem] md:text-[12rem] font-bold text-gray-800/30 leading-none pointer-events-none select-none">
+              <div className="absolute -left-8 md:-left-4 top-0 text-[8rem] md:text-[10rem] font-bold text-gray-800/30 leading-none pointer-events-none select-none">
                 {year}
               </div>
 

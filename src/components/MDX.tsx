@@ -1,11 +1,76 @@
-import { MDXRemote } from "next-mdx-remote/rsc";
+import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote/rsc";
+import rehypeExternalLinks from "rehype-external-links";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import { visit } from "unist-util-visit";
+import type { LineElement } from "rehype-pretty-code";
+import rehypePrettyCode from "rehype-pretty-code";
+import remarkGfm from "remark-gfm";
 import { MDXFallback } from "./MDXFallback";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./ui/table";
+
+const components: MDXRemoteProps["components"] = {
+  table: Table,
+  thead: TableHeader,
+  tbody: TableBody,
+  tr: TableRow,
+  th: TableHead,
+  td: TableCell,
+};
+const options: MDXRemoteProps["options"] = {
+  mdxOptions: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [
+      rehypeSlug,
+      [rehypeAutolinkHeadings, { behavior: "append" }],
+      [
+        rehypeExternalLinks,
+        { target: "_blank", rel: "nofollow noopener noreferrer" },
+      ],
+      () => (tree) => {
+        visit(tree, (node) => {
+          if (node?.type === "element" && node?.tagName === "pre") {
+            const [codeEl] = node.children;
+            if (codeEl.tagName !== "code") {
+              return;
+            }
+
+            node.__rawString__ = codeEl.children?.[0].value;
+          }
+        });
+      },
+      [
+        rehypePrettyCode,
+        {
+          theme: "github-dark",
+          keepBackground: false,
+          onVisitLine(node: LineElement) {
+            // Prevent lines from collapsing in `display: grid` mode, and allow empty
+            // lines to be copy/pasted
+            if (node.children.length === 0) {
+              node.children = [{ type: "text", value: " " }];
+            }
+          },
+        },
+      ],
+    ],
+  },
+};
 
 // 增强版MDX渲染组件，具有错误处理能力
 export function MDX({ code }: { code: string }) {
   // 尝试安全解析MDX内容
   try {
-    return <MDXRemote source={code} />;
+    return (
+      <MDXRemote source={code} components={components} options={options} />
+    );
   } catch (error) {
     console.error("MDX渲染错误，使用降级方案:", error);
 
