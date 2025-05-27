@@ -1,4 +1,5 @@
 import { MDX } from "@/components/mdx";
+import { Prose } from "@/components/ui/typography";
 import { getAllPosts } from "@/lib/mdx";
 
 export async function generateStaticParams() {
@@ -19,5 +20,9 @@ export default async function Page({
   if (!post) {
     return null;
   }
-  return <MDX code={post.content} />;
+  return (
+    <Prose>
+      <MDX code={post.content} />
+    </Prose>
+  );
 }

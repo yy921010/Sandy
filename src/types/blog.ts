@@ -6,7 +6,8 @@ export type PostMetadata = {
   updatedAt: string;
   comments?: boolean;
   draft?: boolean;
-  year: number;
+  year?: number;
+  language?: string;
 };
 
 export type Post = {

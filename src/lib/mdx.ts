@@ -76,6 +76,19 @@ function getMDXData(dir: string): Post[] {
     const { metadata, content } = readMDXFile(path.join(dir, file));
     const slug = path.basename(file, path.extname(file));
 
+    // 确保 createdAt 和 updatedAt 是字符串类型
+    if (metadata.createdAt && typeof metadata.createdAt !== "string") {
+      metadata.createdAt = new Date(metadata.createdAt)
+        .toISOString()
+        .split("T")[0];
+    }
+
+    if (metadata.updatedAt && typeof metadata.updatedAt !== "string") {
+      metadata.updatedAt = new Date(metadata.updatedAt)
+        .toISOString()
+        .split("T")[0];
+    }
+
     return {
       metadata,
       slug,

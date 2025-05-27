@@ -8,6 +8,7 @@ import type React from "react";
 import { useEffect, useRef, useCallback, useMemo } from "react";
 import type { P5I } from "p5i";
 import { p5i } from "p5i";
+import { useTheme } from "next-themes";
 
 const { random, trunc, min } = Math;
 const {
@@ -202,17 +203,16 @@ function draw(
 }
 
 const RiverBackground: React.FC = () => {
-  // const $themeAtom = useStore(themeAtom);
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const observerRef = useRef<ResizeObserver | null>(null);
-  const isDark = true; //useMemo(() => $themeAtom === "dark", [$themeAtom]);
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   const dimensionsRef = useRef({
     width: Math.max(window.innerWidth, CONFIG.SAFETY.MIN_DIMENSION),
     height: Math.max(window.innerHeight, CONFIG.SAFETY.MIN_DIMENSION),
   });
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleResize = useCallback(() => {
     if (!canvasRef.current) return;
 
