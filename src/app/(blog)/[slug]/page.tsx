@@ -1,10 +1,10 @@
 import { MDX } from "@/components/mdx";
 import { Prose } from "@/components/ui/typography";
-import { getAllPosts } from "@/lib/mdx";
+import { allPosts } from "@/lib/mdx";
 import dayjs from "dayjs";
 
 export async function generateStaticParams() {
-  const posts = getAllPosts();
+  const posts = allPosts();
   return posts.map((post) => ({
     slug: post.slug,
   }));
@@ -16,7 +16,7 @@ export default async function Page({
   params: { slug: string };
 }) {
   const { slug } = await params;
-  const post = getAllPosts().find((post) => post.slug === slug);
+  const post = allPosts().find((post) => post.slug === slug);
 
   if (!post) {
     return null;

@@ -2,6 +2,6 @@ export type Nav = {
   title: string;
   url: string;
   key?: string;
-  isJump?: boolean;
+  topShow?: boolean;
   icon?: React.ReactNode;
 };

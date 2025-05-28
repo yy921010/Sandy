@@ -2,9 +2,7 @@ import fs from "node:fs";
 import matter from "gray-matter";
 import path from "node:path";
 import type { Post, PostMetadata } from "@/types/blog";
-
-// 用于缓存博客文章，避免重复读取文件系统
-const postsCache = new Map<string, Post[]>();
+import { NAV_LIST } from "@/config";
 
 /**
  * 解析 MDX 文件的 frontmatter
@@ -101,25 +99,39 @@ function getMDXData(dir: string): Post[] {
  * 获取所有博客文章
  * @returns 博客文章数组
  */
-export function getAllPosts(): Post[] {
-  const contentDir = path.join(process.cwd(), "src", "contents", "blogs");
-
-  // 使用缓存避免重复读取文件系统
-  if (postsCache.has(contentDir)) {
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    return postsCache.get(contentDir)!;
+export function getPostsMap(): Map<string, Post[]> {
+  const postsMap = new Map<string, Post[]>();
+  for (const nav of NAV_LIST) {
+    const key = nav.url.replace(/^\//, "");
+    const contentDir = path.join(process.cwd(), "src", "contents", key);
+    postsMap.set(key, getMDXData(contentDir));
   }
-
-  const posts = getMDXData(contentDir);
-  postsCache.set(contentDir, posts);
-
-  return posts;
+  return postsMap;
 }
+
+export const articlesByYear = (dirname: string): Record<number, Post[]> => {
+  const posts = getPostsMap().get(dirname) || [];
+  // 按年份分组文章
+  return posts.reduce(
+    (acc, post) => {
+      const year =
+        post.metadata.year ||
+        (post.metadata.createdAt
+          ? new Date(post.metadata.createdAt).getFullYear()
+          : new Date().getFullYear());
+      if (!acc[year]) {
+        acc[year] = [];
+      }
+      acc[year].push(post);
+      return acc;
+    },
+    {} as Record<number, Post[]>,
+  );
+};
 
 export function getProfile(): Post[] {
   const contentDir = path.join(process.cwd(), "src", "contents", "profile");
-  const posts = getMDXData(contentDir);
-  return posts;
+  return getMDXData(contentDir);
 }
 
 /**
@@ -127,36 +139,7 @@ export function getProfile(): Post[] {
  * @param slug 文章的 slug
  * @returns 博客文章或 undefined
  */
-export function getPostBySlug(slug: string): Post | undefined {
-  const posts = getAllPosts();
-  return posts.find((post) => post.slug === slug);
-}
-
-/**
- * 获取按日期排序的博客文章
- * @param limit 限制返回的文章数量
- * @returns 排序后的博客文章数组
- */
-export function getSortedPosts(limit?: number): Post[] {
-  const posts = getAllPosts();
-
-  // 按创建日期降序排序
-  console.log(
-    "posts",
-    posts.map((post) => post.metadata.createdAt),
-  );
-  const sortedPosts = [...posts].sort((a, b) => {
-    const dateA = new Date(a.metadata.createdAt).getTime();
-    const dateB = new Date(b.metadata.createdAt).getTime();
-    return dateB - dateA;
-  });
-
-  return limit ? sortedPosts.slice(0, limit) : sortedPosts;
-}
-
-/**
- * 清除文章缓存
- */
-export function clearPostsCache(): void {
-  postsCache.clear();
+export function allPosts(): Post[] {
+  const postsMap = getPostsMap();
+  return Array.from(postsMap.values()).flat();
 }

@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Rss } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Link from "next/link";
 import { MAIN_NAV, SITE } from "@/config";
@@ -18,7 +17,7 @@ export function Navbar() {
         </Link>
 
         <div className="flex items-center space-x-2">
-          {MAIN_NAV.map((item) => (
+          {MAIN_NAV.filter((item) => item.topShow).map((item) => (
             <Button
               asChild
               key={item.title}
@@ -27,16 +26,18 @@ export function Navbar() {
             >
               <Link
                 href={item.url}
-                className="text font-medium text-foreground hover:text-foreground/80 transition-colors"
+                className="font-medium text-foreground hover:text-foreground/80 transition-colors"
               >
-                <span className="inline md:hidden text-sm">{item.icon}</span>
-                <span className="hidden md:inline">{item.title}</span>
+                <span className="inline md:hidden">{item.icon}</span>
+                <span className="hidden md:inline md:text-base">
+                  {item.title}
+                </span>
               </Link>
             </Button>
           ))}
           <Button variant="ghost" className="h-9 w-9 px-0" asChild>
             <Link
-              href={SITE.links.github}
+              href={SITE.social.github}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
