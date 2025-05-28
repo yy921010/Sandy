@@ -24,9 +24,10 @@ const ThemeSwitcher: React.FC = () => {
 
   const initTheme = React.useCallback((): "light" | "dark" => {
     const localTheme = window.localStorage.getItem("theme");
-    return localTheme === "auto"
-      ? getSystemTheme()
-      : (localTheme as "light" | "dark") || "light";
+    if (localTheme === "auto" || localTheme === "system") {
+      return getSystemTheme();
+    }
+    return localTheme === "dark" ? "dark" : "light";
   }, [getSystemTheme]);
 
   // 更新主题的统一方法，使用全局 syncTheme 函数确保与 BaseLayout 保持一致
@@ -112,12 +113,12 @@ const ThemeSwitcher: React.FC = () => {
 
       await transition.ready;
 
-      // 使用更短的动画时长，降低与页面切换冲突的概率
+      // 使用更长的动画时长，使扩散效果更明显
       await document.documentElement.animate(
         { clipPath: theme === "dark" ? clipPath : clipPath.reverse() },
         {
-          duration: 300, // 进一步缩短动画时间
-          easing: "ease-out",
+          duration: 650, // 增加动画时间使效果更明显
+          easing: "cubic-bezier(0.33, 1, 0.68, 1)", // 使用更强调的缓动函数
           pseudoElement:
             theme === "dark"
               ? "::view-transition-new(root)"
@@ -155,14 +156,22 @@ const ThemeSwitcher: React.FC = () => {
     // 监听主题变化（例如系统主题改变）
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleChange = () => {
-      if (localStorage.getItem("theme") === "auto") {
+      const storedTheme = localStorage.getItem("theme");
+      if (storedTheme === "auto" || storedTheme === "system") {
         const systemTheme = getSystemTheme();
         setTheme(systemTheme);
       }
     };
 
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
+    // 使用更现代的事件监听器语法
+    try {
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    } catch (e) {
+      // 兼容旧浏览器
+      mediaQuery.addListener(handleChange);
+      return () => mediaQuery.removeListener(handleChange);
+    }
   }, [initTheme, getSystemTheme, setTheme]);
 
   return (
@@ -171,7 +180,7 @@ const ThemeSwitcher: React.FC = () => {
       variant="ghost"
       size="sm"
       onClick={handleThemeChange}
-      className="btn btn-ghost"
+      className="relative"
     >
       <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
       <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
