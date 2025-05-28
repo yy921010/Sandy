@@ -1,6 +1,6 @@
-import { Badge } from "@/components/ui/badge";
+import { ArticleItem } from "@/components/ArticleItem";
 import { getAllPosts } from "@/lib/mdx";
-import type { Post, PostMetadata } from "@/types/blog";
+import type { Post } from "@/types/blog";
 import dayjs from "dayjs";
 
 const navigationItems = [
@@ -60,36 +60,8 @@ export default async function Page() {
 
               {/* 文章列表 */}
               <div className="relative z-10 space-y-6 pt-8">
-                {yearArticles.map((article, index) => (
-                  <div key={article.metadata.title} className="group">
-                    <a
-                      href={article.slug}
-                      className="block hover:text-gray-300 transition-colors"
-                    >
-                      <div className="flex items-baseline justify-between">
-                        <div className="flex items-center space-x-3">
-                          {article.metadata.language && (
-                            <Badge
-                              variant="outline"
-                              className="text-xs border-gray-600 text-gray-400 bg-transparent"
-                            >
-                              {article.metadata.language}
-                            </Badge>
-                          )}
-                          <h2 className="text-xl font-medium group-hover:text-white transition-colors">
-                            {article.metadata.title}
-                          </h2>
-                        </div>
-                        <div className="text-gray-500 text-sm whitespace-nowrap ml-4">
-                          {typeof article.metadata.createdAt === "string"
-                            ? article.metadata.createdAt
-                            : dayjs(article.metadata.createdAt).format(
-                                "YYYY-MM-DD",
-                              )}
-                        </div>
-                      </div>
-                    </a>
-                  </div>
+                {yearArticles.map((article) => (
+                  <ArticleItem key={article.metadata.title} article={article} />
                 ))}
               </div>
             </div>

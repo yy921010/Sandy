@@ -102,7 +102,7 @@ function getMDXData(dir: string): Post[] {
  * @returns 博客文章数组
  */
 export function getAllPosts(): Post[] {
-  const contentDir = path.join(process.cwd(), "src", "contents");
+  const contentDir = path.join(process.cwd(), "src", "contents", "blogs");
 
   // 使用缓存避免重复读取文件系统
   if (postsCache.has(contentDir)) {
@@ -113,6 +113,12 @@ export function getAllPosts(): Post[] {
   const posts = getMDXData(contentDir);
   postsCache.set(contentDir, posts);
 
+  return posts;
+}
+
+export function getProfile(): Post[] {
+  const contentDir = path.join(process.cwd(), "src", "contents", "profile");
+  const posts = getMDXData(contentDir);
   return posts;
 }
 
