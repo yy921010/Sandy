@@ -1,6 +1,8 @@
-import { Heart } from "lucide-react";
+import {Heart, Rss,} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { SITE } from "@/config";
+import {Button} from "@/components/ui/button";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -18,15 +20,25 @@ export function Footer() {
         <div className="mt-6 pt-4 border-t">
           <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center">
             {/* 版权信息 */}
-            <div className="text-center md:text-left">
+            <div className="text-center md:text-left flex items-center justify-center md:justify-start">
               <span className="text-xs text-muted-foreground">
                 © {SITE.footer.year} {SITE.footer.allRightsReserved}
               </span>
+              <Button variant="ghost" className="h-9 w-9 p-0" asChild>
+                <Link
+                    href="/rss"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="RSS Feed"
+                >
+                  <Rss className="h-8 w-8 text-sm" />
+                </Link>
+              </Button>
             </div>
 
             <div className="flex items-center justify-center md:justify-start space-x-1 text-xs text-muted-foreground">
               <span>Made with</span>
-              <Heart className="h-3 w-3 text-red-500 fill-current" />
+              <Heart className="h-3 w-3 text-destructive fill-current" />
               <span>by</span>
               <a
                 href="https://vercel.com"

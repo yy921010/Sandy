@@ -1,14 +1,15 @@
 import { Button } from "@/components/ui/button";
-import { Github, Rss } from "lucide-react";
+import {  Rss } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Link from "next/link";
 import { MAIN_NAV, SITE } from "@/config";
 import ThemeSwitcher from "./theme-switch";
+import {SiGithub} from "@icons-pack/react-simple-icons";
 
 export function Navbar() {
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center justify-between px-4 mx-auto">
+    <nav className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-24 items-center justify-between px-4 mx-auto">
         <Link className="flex items-center" href="/">
           <Avatar>
             <AvatarImage src={SITE.avatar} alt={SITE.name} />
@@ -18,34 +19,25 @@ export function Navbar() {
 
         <div className="flex items-center space-x-2">
           {MAIN_NAV.map((item) => (
-            <Link
-              key={item.title}
-              href={item.url}
-              className="text-sm font-medium text-foreground hover:text-foreground/80 transition-colors"
-            >
-              {item.title}
-            </Link>
+              <Button asChild key={item.title} variant="ghost" className="h-9 w-9 px-0">
+                <Link
+                    href={item.url}
+                    className="text font-medium text-foreground hover:text-foreground/80 transition-colors"
+                >
+                  <span className="inline md:hidden text-sm">{item.icon}</span>
+                  <span className="hidden md:inline">{item.title}</span>
+                </Link>
+              </Button>
           ))}
-          <Button variant="ghost" size="sm" className="h-9 w-9 px-0" asChild>
-            <a
+          <Button variant="ghost" className="h-9 w-9 px-0" asChild>
+            <Link
               href={SITE.links.github}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
             >
-              <Github className="h-4 w-4" />
-            </a>
-          </Button>
-
-          <Button variant="ghost" size="sm" className="h-9 w-9 px-0" asChild>
-            <a
-              href="/rss"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="RSS Feed"
-            >
-              <Rss className="h-4 w-4" />
-            </a>
+              <SiGithub className="h-8 w-8" />
+            </Link>
           </Button>
           <ThemeSwitcher />
         </div>
