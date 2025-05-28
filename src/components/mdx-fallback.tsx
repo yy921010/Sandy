@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 
 // 动态导入降级组件，仅在客户端渲染
 const MarkdownFallback = dynamic(
-  () => import("./MarkdownFallback").then((mod) => mod.MarkdownFallback),
+  () => import("./markdown-fallback").then((mod) => mod.MarkdownFallback),
   { ssr: false },
 );
 

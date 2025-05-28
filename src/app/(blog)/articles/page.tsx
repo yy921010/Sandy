@@ -1,4 +1,4 @@
-import { ArticleItem } from "@/components/ArticleItem";
+import { ArticleItem } from "@/components/article-item";
 import { getAllPosts } from "@/lib/mdx";
 import type { Post } from "@/types/blog";
 import dayjs from "dayjs";
@@ -53,10 +53,12 @@ export default async function Page() {
           .sort(([a], [b]) => Number(b) - Number(a))
           .map(([year, yearArticles]) => (
             <div key={year} className="relative">
-              {/* 年份背景 */}
-              <div className="absolute -left-8 md:-left-4 top-0 text-[8rem] md:text-[10rem] font-bold text-gray-800/30 leading-none pointer-events-none select-none">
+              <time
+                dateTime={year}
+                className="font-limelight absolute -left-8 md:-left-4 top-0 text-[6rem] md:text-[8rem] font-bold text-foreground/10 leading-none pointer-events-none select-none"
+              >
                 {year}
-              </div>
+              </time>
 
               {/* 文章列表 */}
               <div className="relative z-10 space-y-6 pt-8">

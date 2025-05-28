@@ -1,14 +1,14 @@
 import { Button } from "@/components/ui/button";
-import {  Rss } from "lucide-react";
+import { Rss } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Link from "next/link";
 import { MAIN_NAV, SITE } from "@/config";
 import ThemeSwitcher from "./theme-switch";
-import {SiGithub} from "@icons-pack/react-simple-icons";
+import { SiGithub } from "@icons-pack/react-simple-icons";
 
 export function Navbar() {
   return (
-    <nav className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <nav className="sticky top-0 z-50 w-full bg-background/10 backdrop-blur supports-[backdrop-filter]:bg-background/10">
       <div className="container flex h-24 items-center justify-between px-4 mx-auto">
         <Link className="flex items-center" href="/">
           <Avatar>
@@ -19,15 +19,20 @@ export function Navbar() {
 
         <div className="flex items-center space-x-2">
           {MAIN_NAV.map((item) => (
-              <Button asChild key={item.title} variant="ghost" className="h-9 w-9 px-0">
-                <Link
-                    href={item.url}
-                    className="text font-medium text-foreground hover:text-foreground/80 transition-colors"
-                >
-                  <span className="inline md:hidden text-sm">{item.icon}</span>
-                  <span className="hidden md:inline">{item.title}</span>
-                </Link>
-              </Button>
+            <Button
+              asChild
+              key={item.title}
+              variant="ghost"
+              className="h-9 w-9 px-0"
+            >
+              <Link
+                href={item.url}
+                className="text font-medium text-foreground hover:text-foreground/80 transition-colors"
+              >
+                <span className="inline md:hidden text-sm">{item.icon}</span>
+                <span className="hidden md:inline">{item.title}</span>
+              </Link>
+            </Button>
           ))}
           <Button variant="ghost" className="h-9 w-9 px-0" asChild>
             <Link

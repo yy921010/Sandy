@@ -1,5 +1,5 @@
 import type { Nav } from "@/types/nav";
-import {FileText, Handshake} from "lucide-react";
+import { FileText, Handshake } from "lucide-react";
 
 export const SITE = {
   name: "Ethan Young",
@@ -25,11 +25,11 @@ export const MAIN_NAV: Nav[] = [
   {
     title: "文章",
     url: "/articles",
-    icon: <FileText />
+    icon: <FileText />,
   },
   {
     title: "友链",
     url: "/partner-link",
-    icon: <Handshake />
+    icon: <Handshake />,
   },
 ];

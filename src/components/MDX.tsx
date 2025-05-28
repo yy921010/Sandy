@@ -6,7 +6,7 @@ import { visit } from "unist-util-visit";
 import type { LineElement } from "rehype-pretty-code";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
-import { MDXFallback } from "./MDXFallback";
+import { MDXFallback } from "./mdx-fallback";
 import {
   Table,
   TableBody,
