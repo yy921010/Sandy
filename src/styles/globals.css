@@ -118,20 +118,70 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    scrollbar-width: thin;
+    scrollbar-color: var(--d-border) transparent;
+  }
+  html {
+    @apply scroll-smooth;
   }
   body {
     @apply bg-background text-foreground/70;
+    margin-right: calc(100vw - 100%);
+    /* 添加以下属性改善页面渲染性能 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    backface-visibility: hidden;
+  }
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--d-border);
+    border-radius: 5px;
   }
 }
 
-html {
-   scroll-behavior: smooth;
-}
+@utility rehype-pretty-code {
+  @apply my-6;
 
-body {
-  margin-right: calc(100vw - 100%);
-  /* 添加以下属性改善页面渲染性能 */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  backface-visibility: hidden;
+  pre {
+    @apply max-h-[512px] overflow-x-auto rounded-lg bg-zinc-900 py-4;
+  }
+
+  code {
+    @apply font-mono text-sm;
+  }
+
+  [data-line] {
+    @apply px-4 first:pr-12;
+  }
+
+  [data-rehype-pretty-code-title] {
+    @apply mb-2 px-4 text-sm font-medium;
+  }
+
+  code[data-line-numbers] {
+    counter-reset: line;
+  }
+
+  code[data-line-numbers] > [data-line]::before {
+    @apply mr-8 inline-block w-3 text-right text-xs text-muted-foreground;
+    counter-increment: line;
+    content: counter(line);
+  }
+
+  code[data-line-numbers-max-digits="2"] > [data-line]::before {
+    @apply w-5;
+  }
+
+  code[data-line-numbers-max-digits="3"] > [data-line]::before {
+    @apply w-7;
+  }
+
+  code[data-line-numbers-max-digits="4"] > [data-line]::before {
+    @apply w-9;
+  }
 }

@@ -15,7 +15,7 @@ function formatDate(date: string | Date): string {
   if (typeof date === "string") {
     return date;
   }
-  return dayjs(date).format("YYYY-MM-DD");
+  return dayjs(date).format("MM.DD");
 }
 
 /**

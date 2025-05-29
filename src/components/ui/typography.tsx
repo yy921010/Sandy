@@ -15,7 +15,7 @@ function Prose({
     <Comp
       data-slot="prose"
       className={cn(
-        "prose prose-sm max-w-none font-mono text-foreground/80 prose-zinc dark:prose-invert",
+        "prose prose-sm md:prose-md max-w-none font-mono text-foreground/80 prose-zinc dark:prose-invert",
         "prose-headings:font-heading prose-headings:font-semibold prose-headings:text-balance",
         "prose-h2:border-b prose-h2:pb-2",
         "prose-lead:text-base",

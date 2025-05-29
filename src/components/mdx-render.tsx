@@ -15,6 +15,9 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
+import { Code } from "@/components/ui/typography";
+import { cn } from "@/lib/utils";
+import { CopyButton } from "@/components/copy-button";
 
 const components: MDXRemoteProps["components"] = {
   table: Table,
@@ -23,6 +26,39 @@ const components: MDXRemoteProps["components"] = {
   tr: TableRow,
   th: TableHead,
   td: TableCell,
+  code: Code,
+  figure({ className, ...props }: React.ComponentProps<"figure">) {
+    const hasPrettyCode = "data-rehype-pretty-code-figure" in props;
+    return (
+      <figure
+        className={cn(
+          hasPrettyCode && "not-prose relative rehype-pretty-code",
+          className,
+        )}
+        {...props}
+      />
+    );
+  },
+  pre({
+    __withMeta__,
+    __rawString__,
+    ...props
+  }: React.ComponentProps<"pre"> & {
+    __withMeta__?: boolean;
+    __rawString__?: string;
+  }) {
+    return (
+      <>
+        <pre {...props} />
+        {__rawString__ && (
+          <CopyButton
+            className={cn("absolute top-2 right-2", __withMeta__ && "top-9")}
+            value={__rawString__}
+          />
+        )}
+      </>
+    );
+  },
 };
 const options: MDXRemoteProps["options"] = {
   mdxOptions: {
@@ -60,6 +96,32 @@ const options: MDXRemoteProps["options"] = {
           },
         },
       ],
+      () => (tree) => {
+        visit(tree, (node) => {
+          if (node?.type === "element" && node?.tagName === "figure") {
+            if (!("data-rehype-pretty-code-figure" in node.properties)) {
+              return;
+            }
+
+            const preElement = node.children.at(-1) as {
+              type: "element";
+              tagName: "pre";
+              properties: {
+                __withMeta__?: boolean;
+                __rawString__?: string;
+              };
+            };
+            if (preElement.tagName !== "pre") {
+              return;
+            }
+            // 将 __withMeta__ 属性添加到 pre 元素上, 获取code 中的 __rawString__
+            // 以便在渲染时使用
+            preElement.properties.__withMeta__ =
+              node.children.at(0).tagName === "figcaption";
+            preElement.properties.__rawString__ = node.__rawString__ as string;
+          }
+        });
+      },
     ],
   },
 };
