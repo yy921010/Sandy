@@ -18,7 +18,6 @@ export async function GET(request: Request) {
       <div tw="absolute flex inset-y-0 w-px border border-zinc-800 right-16" />
       <div tw="absolute flex inset-x-0 h-px border border-zinc-800 top-16" />
       <div tw="absolute flex inset-x-0 h-px border border-zinc-800 bottom-16" />
-
       <div tw="absolute flex bottom-16 right-16">
         {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
         <svg
