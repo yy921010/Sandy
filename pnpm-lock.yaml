@@ -71,6 +71,9 @@ importers:
       remark-toc:
         specifier: ^7.0.0
         version: 7.0.0
+      shiki:
+        specifier: ^3.4.2
+        version: 3.4.2
       tailwind-merge:
         specifier: ^3.3.0
         version: 3.3.0

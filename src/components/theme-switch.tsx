@@ -117,7 +117,7 @@ const ThemeSwitcher: React.FC = () => {
       await document.documentElement.animate(
         { clipPath: theme === "dark" ? clipPath : clipPath.reverse() },
         {
-          duration: 650, // 增加动画时间使效果更明显
+          duration: 350,
           easing: "cubic-bezier(0.33, 1, 0.68, 1)", // 使用更强调的缓动函数
           pseudoElement:
             theme === "dark"

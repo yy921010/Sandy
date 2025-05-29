@@ -1,9 +1,9 @@
-import { getAllPosts } from "@/lib/mdx";
+import { allPosts } from "@/lib/mdx";
 import dayjs from "dayjs";
 import { SITE } from "@/config";
 
 export async function GET() {
-  const allArticles = getAllPosts();
+  const allArticles = allPosts();
   const itemsXml = allArticles
     .slice()
     .sort((a, b) =>

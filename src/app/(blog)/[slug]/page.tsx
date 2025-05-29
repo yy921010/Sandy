@@ -2,6 +2,7 @@ import { MDX } from "@/components/mdx";
 import { Prose } from "@/components/ui/typography";
 import { allPosts } from "@/lib/mdx";
 import dayjs from "dayjs";
+import type { Metadata } from "next";
 
 export async function generateStaticParams() {
   const posts = allPosts();
@@ -10,12 +11,55 @@ export async function generateStaticParams() {
   }));
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const slug = (await params).slug;
+  const post = allPosts().find((post) => post.slug === slug);
+
+  if (!post) {
+    return {};
+  }
+
+  const { title, description, image, createdAt, updatedAt } = post.metadata;
+
+  const ogImage = image || `/og?title=${encodeURIComponent(title)}`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/blogs/${post.slug}`,
+    },
+    openGraph: {
+      url: `/blogs/${post.slug}`,
+      type: "article",
+      publishedTime: dayjs(createdAt).toISOString(),
+      modifiedTime: dayjs(updatedAt).toISOString(),
+      images: {
+        url: ogImage,
+        width: 1200,
+        height: 630,
+        alt: title,
+      },
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: [ogImage],
+    },
+  };
+}
+
 export default async function Page({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{
+    slug: string;
+  }>;
 }) {
-  const { slug } = await params;
+  const slug = (await params).slug;
   const post = allPosts().find((post) => post.slug === slug);
 
   if (!post) {
