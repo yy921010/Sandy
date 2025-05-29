@@ -1,4 +1,5 @@
 import { MDX } from "@/components/mdx-render";
+import { Toc } from "@/components/toc";
 import { Prose } from "@/components/ui/typography";
 import { getPageJsonLd } from "@/lib/jsonLd";
 import { allPosts } from "@/lib/mdx";
@@ -71,6 +72,7 @@ export default async function Page({
       <script type="application/ld+json">
         {JSON.stringify(websiteJsonLd)}
       </script>
+      {post.metadata.toc && <Toc toc={post.headings || []} />}
       <div className="px-4 py-1">
         <time
           className="font-mono text-sm text-muted-foreground"

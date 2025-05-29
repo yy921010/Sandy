@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Limelight } from "next/font/google";
-import "./globals.css";
+import "@/styles/globals.css";
 import Providers from "@/components/providers";
 import { SITE } from "@/config";
 

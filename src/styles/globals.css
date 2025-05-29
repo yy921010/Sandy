@@ -123,3 +123,15 @@
     @apply bg-background text-foreground/70;
   }
 }
+
+html {
+   scroll-behavior: smooth;
+}
+
+body {
+  margin-right: calc(100vw - 100%);
+  /* 添加以下属性改善页面渲染性能 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  backface-visibility: hidden;
+}

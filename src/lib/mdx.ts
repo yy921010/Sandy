@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import matter from "gray-matter";
 import path from "node:path";
-import type { Post, PostMetadata } from "@/types/blog";
+import type { Heading, Post, PostMetadata } from "@/types/blog";
 import { NAV_LIST } from "@/config";
 
 /**
@@ -62,6 +62,36 @@ function readMDXFile(filePath: string) {
   }
 }
 
+export function extractMdxHeadings(mdxContent: string): Array<Heading> {
+  const headings: Array<Heading> = [];
+  // 匹配 `#` 语法的标题
+  const headingMatcher = /^(#+)\s(.+)$/gm;
+  let match = headingMatcher.exec(mdxContent);
+  while (match) {
+    const depth = match[1].length; // `#` 的数量决定标题的深度
+    const text = match[2].trim();
+    // 创建标题对象
+    const heading: Heading = {
+      depth,
+      slug: text,
+      text,
+    };
+
+    // 如果当前标题深度大于上一个标题，则将其添加为子标题
+    if (headings.length > 0 && headings[headings.length - 1].depth < depth) {
+      const parentHeading = headings[headings.length - 1];
+      if (!parentHeading.children) {
+        parentHeading.children = [];
+      }
+      parentHeading.children.push(heading);
+    } else {
+      headings.push(heading);
+    }
+
+    match = headingMatcher.exec(mdxContent);
+  }
+  return headings;
+}
 /**
  * 获取指定目录下所有 MDX 文件的数据
  * @param dir 目录路径
@@ -73,7 +103,7 @@ function getMDXData(dir: string): Post[] {
   return mdxFiles.map((file) => {
     const { metadata, content } = readMDXFile(path.join(dir, file));
     const slug = path.basename(file, path.extname(file));
-
+    const headings = extractMdxHeadings(content);
     // 确保 createdAt 和 updatedAt 是字符串类型
     if (metadata.createdAt && typeof metadata.createdAt !== "string") {
       metadata.createdAt = new Date(metadata.createdAt)
@@ -91,6 +121,7 @@ function getMDXData(dir: string): Post[] {
       metadata,
       slug,
       content,
+      headings,
     };
   });
 }
