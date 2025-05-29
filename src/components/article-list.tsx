@@ -28,9 +28,18 @@ export function ArticleList({
                 {year}
               </time>
               <div className="relative z-10 space-y-6 pt-8">
-                {yearArticles.map((article: Post) => (
-                  <ArticleItem key={article.metadata.title} article={article} />
-                ))}
+                {yearArticles
+                  .sort(
+                    (a, b) =>
+                      new Date(b.metadata.createdAt).getTime() -
+                      new Date(a.metadata.createdAt).getTime(),
+                  )
+                  .map((article: Post) => (
+                    <ArticleItem
+                      key={article.metadata.title}
+                      article={article}
+                    />
+                  ))}
               </div>
             </div>
           ))}

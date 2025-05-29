@@ -1,4 +1,4 @@
-# Puper - Modern Personal Blog System
+# Sandy - Modern Personal Blog System
 
 A modern personal blog system built with [Next.js](https://nextjs.org) App Router, featuring elegant theme transitions, interactive friend links display, MDX content support, and more. This project leverages the latest Web technology stack, supports responsive design, and is optimized for performance.
 
