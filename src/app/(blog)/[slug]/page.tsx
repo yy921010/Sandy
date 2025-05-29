@@ -1,4 +1,4 @@
-import { MDX } from "@/components/mdx";
+import { MDX } from "@/components/mdx-render";
 import { Prose } from "@/components/ui/typography";
 import { getPageJsonLd } from "@/lib/jsonLd";
 import { allPosts } from "@/lib/mdx";

@@ -1,5 +1,5 @@
 import { Footer } from "@/components/footer";
-import { MDX } from "@/components/mdx";
+import { MDX } from "@/components/mdx-render";
 import { Navbar } from "@/components/navbar";
 import { Prose } from "@/components/ui/typography";
 import { getProfileJsonLd } from "@/lib/jsonLd";
