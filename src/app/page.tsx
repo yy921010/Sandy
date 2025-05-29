@@ -1,6 +1,7 @@
 import { Footer } from "@/components/footer";
 import { MDX } from "@/components/mdx-render";
 import { Navbar } from "@/components/navbar";
+import { ScrollTop } from "@/components/scroll-top";
 import { Prose } from "@/components/ui/typography";
 import { getProfileJsonLd } from "@/lib/jsonLd";
 import { getProfile } from "@/lib/mdx";
@@ -19,6 +20,7 @@ export default function Home() {
           </Prose>
         </main>
         <Footer />
+        <ScrollTop />
       </div>
     </>
   );

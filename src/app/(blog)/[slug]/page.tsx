@@ -1,3 +1,4 @@
+import { Comments } from "@/components/comment";
 import { MDX } from "@/components/mdx-render";
 import { Toc } from "@/components/toc";
 import { Prose } from "@/components/ui/typography";
@@ -73,7 +74,7 @@ export default async function Page({
         {JSON.stringify(websiteJsonLd)}
       </script>
       {post.metadata.toc && <Toc toc={post.headings || []} />}
-      <div className="px-4 py-1">
+      <div className="py-1">
         <time
           className="font-mono text-sm text-muted-foreground"
           dateTime={dayjs(post.metadata.createdAt).toISOString()}
@@ -93,6 +94,7 @@ export default async function Page({
         </div>
         <MDX code={post.content} />
       </Prose>
+      {post.metadata.comment && <Comments />}
     </>
   );
 }

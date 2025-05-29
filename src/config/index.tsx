@@ -1,5 +1,6 @@
 import type { Nav } from "@/types/nav";
 import type { Site } from "@/types/site";
+import type { GiscusProps } from "@giscus/react";
 import { FileText, Handshake } from "lucide-react";
 
 export const SITE: Site = {
@@ -69,6 +70,14 @@ export const SITE: Site = {
       logo: "https://llingfei.com/tx.jpg",
     },
   ],
+};
+
+export const COMMENTS: GiscusProps = {
+  repo: "yy921010/Sandy",
+  repoId: "R_kgDOOYuc0Q",
+  category: "General",
+  categoryId: "DIC_kwDOOYuc0c4CqvQR",
+  mapping: "pathname",
 };
 
 export const NAV_LIST: Nav[] = [

@@ -10,7 +10,7 @@ export function ArticleList({
 }) {
   const posts = articlesByYear(postKey);
   return (
-    <>
+    <div className="pb-20">
       <div className="flex justify-between items-start mb-16">
         <nav className="flex flex-col space-y-6 md:flex-row md:space-x-8 ">
           <SubNavbar activeUrl={postKey} />
@@ -44,6 +44,6 @@ export function ArticleList({
             </div>
           ))}
       </div>
-    </>
+    </div>
   );
 }

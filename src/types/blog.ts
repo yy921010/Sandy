@@ -4,11 +4,12 @@ export type PostMetadata = {
   image?: string;
   createdAt: string;
   updatedAt: string;
-  comments?: boolean;
+  comment?: boolean;
   draft?: boolean;
   year?: number;
-  language?: string;
+  lang?: string;
   toc?: boolean;
+  subtitle?: string;
 };
 
 export type Post = {
@@ -23,4 +24,9 @@ export interface Heading {
   slug: string;
   text: string;
   children?: Heading[];
+}
+
+export interface ArticleItemProps {
+  article: Post;
+  showDescription?: boolean;
 }
