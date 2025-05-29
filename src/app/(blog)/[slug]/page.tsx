@@ -1,5 +1,6 @@
 import { MDX } from "@/components/mdx";
 import { Prose } from "@/components/ui/typography";
+import { getPageJsonLd } from "@/lib/jsonLd";
 import { allPosts } from "@/lib/mdx";
 import dayjs from "dayjs";
 import type { Metadata } from "next";
@@ -31,10 +32,10 @@ export async function generateMetadata({
     title,
     description,
     alternates: {
-      canonical: `/blogs/${post.slug}`,
+      canonical: `/${post.slug}`,
     },
     openGraph: {
-      url: `/blogs/${post.slug}`,
+      url: `/${post.slug}`,
       type: "article",
       publishedTime: dayjs(createdAt).toISOString(),
       modifiedTime: dayjs(updatedAt).toISOString(),
@@ -61,12 +62,15 @@ export default async function Page({
 }) {
   const slug = (await params).slug;
   const post = allPosts().find((post) => post.slug === slug);
-
   if (!post) {
     return null;
   }
+  const websiteJsonLd = getPageJsonLd(post);
   return (
     <>
+      <script type="application/ld+json">
+        {JSON.stringify(websiteJsonLd)}
+      </script>
       <div className="px-4 py-1">
         <time
           className="font-mono text-sm text-muted-foreground"

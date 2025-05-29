@@ -24,6 +24,7 @@ export interface Friend {
 
 export interface Site {
   name: string;
+  date: string;
   avatar: string;
   description: string;
   url: string;

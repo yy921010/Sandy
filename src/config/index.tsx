@@ -4,6 +4,7 @@ import { FileText, Handshake } from "lucide-react";
 
 export const SITE: Site = {
   name: "Ethan Young",
+  date: "2023-10-01",
   avatar: "/avatar.png",
   description: "Ethan Young 的个人博客，记录前端技术、编程实践和生活点滴。",
   url: "https://ethanyoung.me",
