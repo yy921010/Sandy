@@ -31,11 +31,11 @@ export function ArticleItem({ article }: ArticleItemProps) {
                 {metadata.lang}
               </Badge>
             )}
-            <h2 className="text-xl font-medium group-hover:text-white transition-colors">
+            <h2 className="text-xl font-medium group-hover:text-foreground transition-colors">
               {metadata.title}
             </h2>
           </div>
-          <div className="text-gray-500 text-sm whitespace-nowrap ml-4">
+          <div className="text-foreground/50 text-sm whitespace-nowrap ml-4">
             {formattedDate}
           </div>
         </div>

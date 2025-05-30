@@ -8,8 +8,8 @@ export const SITE: Site = {
   date: "2023-10-01",
   avatar: "/avatar.png",
   description: "Ethan Young 的个人博客，记录前端技术、编程实践和生活点滴。",
-  url: "https://ethanyoung.me",
-  ogImage: "https://ethanyoung.me/og.png",
+  url: "https://ethyoung.me",
+  ogImage: "https://ethyoung.me/og.png",
   social: {
     github: "https://github.com/yy921010",
     email: "mailto:charlesmaxwellyoung@gmail.com",
@@ -20,7 +20,7 @@ export const SITE: Site = {
     year: new Date().getFullYear(),
     allRightsReserved: "All rights reserved",
     baseTitle: "Ethan Young's Blog",
-    baseUrl: "https://ethanyoung.me",
+    baseUrl: "https://ethyoung.me",
   },
   // 模拟链接数据 - 为了匹配图片效果，增加更多项
   friends: [
