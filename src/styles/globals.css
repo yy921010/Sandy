@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "./view-transitions.css";
+@import './slide-animation.css';
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));

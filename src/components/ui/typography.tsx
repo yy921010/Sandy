@@ -15,6 +15,7 @@ function Prose({
     <Comp
       data-slot="prose"
       className={cn(
+        "slide-enter-content",
         "prose-sm prose md:prose-base max-w-none font-mono text-foreground/80 prose-zinc dark:prose-invert",
         "prose-headings:font-heading prose-headings:font-semibold prose-headings:text-balance",
         "prose-h2:border-b prose-h2:pb-2",

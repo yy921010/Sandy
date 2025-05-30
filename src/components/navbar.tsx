@@ -22,6 +22,7 @@ export function Navbar() {
               asChild
               key={item.title}
               variant="ghost"
+              size="lg"
               className="h-9 w-9 px-0"
             >
               <Link
