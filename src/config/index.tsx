@@ -1,7 +1,8 @@
 import type { Nav } from "@/types/nav";
-import type { Site } from "@/types/site";
+import type { Friend, Site } from "@/types/site";
 import type { GiscusProps } from "@giscus/react";
 import { FileText, Handshake } from "lucide-react";
+import friends from "@/config/friends.json";
 
 export const SITE: Site = {
   name: "Ethan Young",
@@ -23,53 +24,7 @@ export const SITE: Site = {
     baseUrl: "https://ethyoung.me",
   },
   // 模拟链接数据 - 为了匹配图片效果，增加更多项
-  friends: [
-    {
-      id: "花墨",
-      name: "花墨",
-      tier: "platinum",
-      size: "lg",
-      logo: "https://api.flowersink.com/img/logo.png",
-      url: "https://flowersink.com",
-      desc: "一个喜欢写作、分享生活的已婚前端的个人网站",
-    },
-    {
-      id: "我要去巴萨",
-      tier: "platinum",
-      size: "lg",
-      name: "我要去巴萨",
-      logo: "",
-      url: "https://www.aaabbc.space:8095/",
-      desc: "技术分享博客",
-    },
-    {
-      id: "敖武的博客",
-      tier: "platinum",
-      size: "lg",
-      logo: "",
-      name: "敖武的博客",
-      url: "https://z.wiki",
-      desc: "啦啦啦",
-    },
-    {
-      id: "张洪Heo",
-      tier: "platinum",
-      size: "lg",
-      name: "张洪Heo",
-      url: "https://blog.zhheo.com/",
-      desc: "分享设计与科技生活",
-      logo: "https://bu.dusays.com/2022/12/28/63ac2812183aa.png",
-    },
-    {
-      id: "凌飞阁",
-      tier: "platinum",
-      size: "lg",
-      name: "凌飞阁",
-      url: "https://llingfei.com",
-      desc: "烂柯山与浮云齐，突星骑石凌飞鸟。",
-      logo: "https://llingfei.com/tx.jpg",
-    },
-  ],
+  friends: friends as Friend[],
 };
 
 export const COMMENTS: GiscusProps = {

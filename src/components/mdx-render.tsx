@@ -88,8 +88,7 @@ const options: MDXRemoteProps["options"] = {
           theme: "github-dark",
           keepBackground: false,
           onVisitLine(node: LineElement) {
-            // Prevent lines from collapsing in `display: grid` mode, and allow empty
-            // lines to be copy/pasted
+            // 处理空行，确保它们可以被复制和正确显示
             if (node.children.length === 0) {
               node.children = [{ type: "text", value: " " }];
             }
@@ -117,7 +116,7 @@ const options: MDXRemoteProps["options"] = {
             // 将 __withMeta__ 属性添加到 pre 元素上, 获取code 中的 __rawString__
             // 以便在渲染时使用
             preElement.properties.__withMeta__ =
-              node.children.at(0).tagName === "figcaption";
+              node.children.at(0)?.tagName === "figcaption";
             preElement.properties.__rawString__ = node.__rawString__ as string;
           }
         });
@@ -126,17 +125,22 @@ const options: MDXRemoteProps["options"] = {
   },
 };
 
-// 增强版MDX渲染组件，具有错误处理能力
+/**
+ * 增强版MDX渲染组件
+ *
+ * 提供了错误处理功能，在MDX渲染失败时提供降级方案
+ *
+ * @param code - MDX源代码
+ */
 export function MDX({ code }: { code: string }) {
-  // 尝试安全解析MDX内容
   try {
+    // 尝试使用MDXRemote渲染内容
     return (
       <MDXRemote source={code} components={components} options={options} />
     );
   } catch (error) {
+    // 错误处理，使用降级渲染方案
     console.error("MDX渲染错误，使用降级方案:", error);
-
-    // 如果MDX解析失败，使用MDXFallback组件作为降级方案
     return <MDXFallback code={code} />;
   }
 }

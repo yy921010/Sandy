@@ -7,7 +7,7 @@ import { SiGithub } from "@icons-pack/react-simple-icons";
 
 export function Navbar() {
   return (
-    <nav className="sticky top-0 z-50 w-full bg-background/10 backdrop-blur supports-[backdrop-filter]:bg-background/10">
+    <nav className="top-0 z-50 w-full bg-background/10 backdrop-blur supports-[backdrop-filter]:bg-background/10">
       <div className="container flex h-24 items-center justify-between px-4 mx-auto">
         <Link className="flex items-center" href="/">
           <Avatar>
