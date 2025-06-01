@@ -1,19 +1,19 @@
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Link from "next/link";
 import { MAIN_NAV, SITE } from "@/config";
 import ThemeSwitcher from "./theme-switch";
 import { SiGithub } from "@icons-pack/react-simple-icons";
+import { GenerateLogo } from "./generate-logo";
 
 export function Navbar() {
   return (
     <nav className="top-0 z-50 w-full bg-background/10 backdrop-blur supports-[backdrop-filter]:bg-background/10">
       <div className="container flex h-24 items-center justify-between px-4 mx-auto">
-        <Link className="flex items-center" href="/">
-          <Avatar>
-            <AvatarImage src={SITE.avatar} alt={SITE.name} />
-            <AvatarFallback>{SITE.name}</AvatarFallback>
-          </Avatar>
+        <Link href="/" className="flex items-center relative h-20 w-64">
+          <GenerateLogo />
+          <span className="ml-2 hidden md:inline text-lg font-semibold text-foreground">
+            {SITE.name}
+          </span>
         </Link>
 
         <div className="flex items-center space-x-2">
