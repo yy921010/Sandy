@@ -76,7 +76,7 @@ export default async function Page({
       {post.metadata.toc && <Toc toc={post.headings || []} />}
       <div className="py-1">
         <time
-          className="font-mono text-sm text-muted-foreground"
+          className="font-maple-mono text-sm text-muted-foreground"
           dateTime={dayjs(post.metadata.createdAt).toISOString()}
         >
           {dayjs(post.metadata.createdAt).format("YYYY.MM.DD")}

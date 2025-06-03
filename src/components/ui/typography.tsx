@@ -16,7 +16,7 @@ function Prose({
       data-slot="prose"
       className={cn(
         "slide-enter-content",
-        "prose-sm prose md:prose-base max-w-none font-mono text-foreground/80 prose-zinc dark:prose-invert",
+        "prose-sm prose md:prose-base max-w-none font-maple-mono text-foreground/80 prose-zinc dark:prose-invert",
         "prose-headings:font-heading prose-headings:font-semibold prose-headings:text-balance",
         "prose-h2:border-b prose-h2:pb-2",
         "prose-lead:text-base",
@@ -38,7 +38,7 @@ function Code({ className, ...props }: React.ComponentProps<"code">) {
       data-slot={isCodeBlock ? "code-block" : "code-inline"}
       className={cn(
         !isCodeBlock &&
-          "not-prose rounded-md border bg-muted/50 px-[0.3rem] py-[0.2rem] font-mono text-sm",
+          "not-prose rounded-md border bg-muted/50 px-[0.3rem] py-[0.2rem] text-sm",
         className,
       )}
       {...props}

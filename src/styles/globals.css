@@ -4,10 +4,23 @@
 @import './slide-animation.css';
 @plugin "@tailwindcss/typography";
 
+/* maple-mono-latin-400-normal */
+@font-face {
+  font-family: 'Maple Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/maple-mono@latest/latin-400-normal.woff2) format('woff2'), url(https://cdn.jsdelivr.net/fontsource/fonts/maple-mono@latest/latin-400-normal.woff) format('woff');
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-plaster: var(--font-plaster);
+  --font-monoton: var(--font-monoton);
+  --font-agdasima: var(--font-agdasima);
+  --font-pacifico: var(--font-pacifico);
+  --font-firaCode: var(--font-firaCode);
+  --font-maple-mono: 'Maple Mono', sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -153,7 +166,7 @@
   }
 
   code {
-    @apply font-mono text-sm;
+    @apply font-firaCode text-sm;
   }
 
   [data-line] {

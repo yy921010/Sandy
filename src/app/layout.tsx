@@ -1,21 +1,30 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Plaster } from "next/font/google";
+import { Pacifico, Agdasima, Monoton, Fira_Code } from "next/font/google";
 import "@/styles/globals.css";
 import Providers from "@/components/providers";
 import { SITE } from "@/config";
+import { cn } from "@/lib/utils";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const monoton = Monoton({
+  variable: "--font-monoton",
   subsets: ["latin"],
+  weight: "400",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const pacifico = Pacifico({
+  variable: "--font-pacifico",
   subsets: ["latin"],
+  weight: "400",
 });
 
-const plaster = Plaster({
-  variable: "--font-plaster",
+const agdasima = Agdasima({
+  variable: "--font-agdasima",
+  subsets: ["latin"],
+  weight: "400",
+});
+
+const firaCode = Fira_Code({
+  variable: "--font-fira-code",
   subsets: ["latin"],
   weight: "400",
 });
@@ -37,7 +46,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <link rel="icon" href="/svg/Astro.svg" />
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${plaster.variable} antialiased`}
+        className={cn(
+          "antialiased",
+          agdasima.variable,
+          pacifico.variable,
+          monoton.variable,
+          firaCode.variable,
+        )}
       >
         <Providers>{children}</Providers>
       </body>

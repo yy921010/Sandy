@@ -11,7 +11,7 @@ export function Navbar() {
       <div className="container flex h-24 items-center justify-between px-4 mx-auto">
         <Link href="/" className="flex items-center relative h-20 w-64">
           <GenerateLogo />
-          <span className="ml-2 hidden md:inline text-lg font-semibold text-foreground">
+          <span className="font-pacifico ml-2 hidden md:inline text-lg font-semibold text-foreground">
             {SITE.name}
           </span>
         </Link>
