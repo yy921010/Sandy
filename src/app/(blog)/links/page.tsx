@@ -3,6 +3,16 @@
 import { useEffect, useState, useRef } from "react";
 import { SITE } from "@/config";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Comments } from "@/components/comment";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default function LinksPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -277,6 +287,64 @@ export default function LinksPage() {
                 );
               })}
           </div>
+        </div>
+        <div className="mt-20 mb-16">
+          <h2 className="text-2xl font-bold mb-6 text-foreground/80 border-b pb-2">
+            友链申请
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card className="shadow-md border-background/20 ">
+              <CardHeader>
+                <CardTitle className="text-xl">基本要求</CardTitle>
+                <CardDescription>申请友链需满足以下条件</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="list-disc pl-5 space-y-2">
+                  <li>网站稳定运行，内容健康积极向上</li>
+                  <li>网站已稳定运行至少 3 个月</li>
+                  <li>站点内容原创为主，定期更新</li>
+                  <li>有独立域名和 HTTPS 支持</li>
+                  <li>页面设计简约美观，浏览体验良好</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-md border-background/20">
+              <CardHeader>
+                <CardTitle className="text-xl">申请流程</CardTitle>
+                <CardDescription>如何申请加入友链圈</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ol className="list-decimal pl-5 space-y-2">
+                  <li>确认您的网站符合基本要求</li>
+                  <li>
+                    在您的网站添加本站友链信息：
+                    <div className="bg-muted p-3 rounded-md my-2 dark:bg-gray-800">
+                      <p>
+                        <strong>站名：</strong>
+                        {SITE.name}
+                      </p>
+                      <p>
+                        <strong>网址：</strong>
+                        {SITE.url}
+                      </p>
+                      <p>
+                        <strong>描述：</strong>
+                        {SITE.description}
+                      </p>
+                      <p>
+                        <strong>头像：</strong>
+                        {SITE.url}/avatar.png
+                      </p>
+                    </div>
+                  </li>
+                </ol>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+        <div>
+          <Comments />
         </div>
       </div>
     </div>
