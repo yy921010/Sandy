@@ -23,7 +23,7 @@ export function ArticleList({
             <div key={year} className="relative">
               <time
                 dateTime={year}
-                className="font-limelight absolute -left-8 md:-left-4 top-0 text-[6rem] md:text-[8rem] font-bold text-foreground/10 leading-none pointer-events-none select-none"
+                className="font-plaster absolute -left-8 md:-left-4 top-0 text-[6rem] md:text-[8rem] font-bold text-foreground/10 leading-none pointer-events-none select-none"
               >
                 {year}
               </time>

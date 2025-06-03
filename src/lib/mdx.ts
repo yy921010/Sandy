@@ -160,8 +160,14 @@ export const articlesByYear = (dirname: string): Record<number, Post[]> => {
   );
 };
 
-export function getProfile(): Post[] {
-  const contentDir = path.join(process.cwd(), "src", "contents", "profile");
+export function getProfile(lang = ""): Post[] {
+  const contentDir = path.join(
+    process.cwd(),
+    "src",
+    "contents",
+    "profile",
+    lang,
+  );
   return getMDXData(contentDir);
 }
 

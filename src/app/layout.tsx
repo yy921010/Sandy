@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Limelight } from "next/font/google";
+import { Geist, Geist_Mono, Plaster } from "next/font/google";
 import "@/styles/globals.css";
 import Providers from "@/components/providers";
 import { SITE } from "@/config";
@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const limelight = Limelight({
-  variable: "--font-limelight",
+const plaster = Plaster({
+  variable: "--font-plaster",
   subsets: ["latin"],
   weight: "400",
 });
@@ -37,7 +37,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <link rel="icon" href="/svg/Astro.svg" />
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${limelight.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${plaster.variable} antialiased`}
       >
         <Providers>{children}</Providers>
       </body>
