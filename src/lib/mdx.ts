@@ -134,7 +134,7 @@ export function getPostsMap(): Map<string, Post[]> {
   const postsMap = new Map<string, Post[]>();
   for (const nav of NAV_LIST) {
     const key = nav.url.replace(/^\//, "");
-    const contentDir = path.join(process.cwd(), "src", "contents", key);
+    const contentDir = path.join(process.cwd(), "contents", key);
     postsMap.set(key, getMDXData(contentDir));
   }
   return postsMap;
@@ -161,13 +161,7 @@ export const articlesByYear = (dirname: string): Record<number, Post[]> => {
 };
 
 export function getProfile(lang = ""): Post[] {
-  const contentDir = path.join(
-    process.cwd(),
-    "src",
-    "contents",
-    "profile",
-    lang,
-  );
+  const contentDir = path.join(process.cwd(), "contents", "profile", lang);
   return getMDXData(contentDir);
 }
 
