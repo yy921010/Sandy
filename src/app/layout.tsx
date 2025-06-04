@@ -26,7 +26,7 @@ const agdasima = Agdasima({
 const firaCode = Fira_Code({
   variable: "--font-fira-code",
   subsets: ["latin"],
-  weight: "400",
+  weight: "500",
 });
 
 export const metadata: Metadata = {

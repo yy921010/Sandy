@@ -85,7 +85,7 @@ const options: MDXRemoteProps["options"] = {
       [
         rehypePrettyCode,
         {
-          theme: "github-dark",
+          theme: "tokyo-night",
           keepBackground: false,
           onVisitLine(node: LineElement) {
             // 处理空行，确保它们可以被复制和正确显示
