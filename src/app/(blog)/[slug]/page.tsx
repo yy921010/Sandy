@@ -83,15 +83,12 @@ export default async function Page({
         </time>
       </div>
       <Prose>
-        <div className="screen-line-after">
-          <h1 className="mb-6 font-heading font-semibold">
-            {post.metadata.title}
-          </h1>
-        </div>
-
-        <div className="screen-line-before">
+        <h1 className="mb-6 font-heading font-semibold">
+          {post.metadata.title}
+        </h1>
+        <blockquote>
           <p className="lead mt-0 pt-1">{post.metadata.description}</p>
-        </div>
+        </blockquote>
         <MDX code={post.content} />
       </Prose>
       {post.metadata.comment && <Comments />}

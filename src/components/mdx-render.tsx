@@ -18,6 +18,8 @@ import {
 import { Code } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { CopyButton } from "@/components/copy-button";
+import rehypeMermaid from "@/lib/rehypeMermaid";
+import { Mermaid } from "./mermaid";
 
 const components: MDXRemoteProps["components"] = {
   table: Table,
@@ -27,6 +29,7 @@ const components: MDXRemoteProps["components"] = {
   th: TableHead,
   td: TableCell,
   code: Code,
+  mermaid: Mermaid,
   figure({ className, ...props }: React.ComponentProps<"figure">) {
     const hasPrettyCode = "data-rehype-pretty-code-figure" in props;
     return (
@@ -65,6 +68,7 @@ const options: MDXRemoteProps["options"] = {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [
       rehypeSlug,
+      rehypeMermaid,
       [rehypeAutolinkHeadings, { behavior: "append" }],
       [
         rehypeExternalLinks,
