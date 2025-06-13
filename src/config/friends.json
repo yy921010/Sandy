@@ -43,5 +43,14 @@
     "url": "https://llingfei.com",
     "desc": "烂柯山与浮云齐，突星骑石凌飞鸟。",
     "logo": "https://llingfei.com/tx.jpg"
+  },
+  {
+    "id": "xiaoming728",
+    "tier": "platinum",
+    "size": "lg",
+    "name": "xiaoming728",
+    "url": "https://xiaoming728.com",
+    "desc": "",
+    "logo": "https://xiaoming728.com/upload/logo.jpg"
   }
 ]
