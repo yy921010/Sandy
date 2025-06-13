@@ -52,5 +52,14 @@
     "url": "https://xiaoming728.com",
     "desc": "",
     "logo": "https://xiaoming728.com/upload/logo.jpg"
+  },
+  {
+    "id": "inASMR",
+    "tier": "platinum",
+    "size": "lg",
+    "name": "inASMR",
+    "logo": "https://inasmr.com/logo.png",
+    "url": "https://inasmr.com",
+    "desc": "Discover Soothing ASMR Content at inASMR"
   }
 ]
