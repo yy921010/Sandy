@@ -16,7 +16,7 @@ toc: true
 
 一天早上邮箱收到如下信息：
 
-[![1737689980932.png](https://home.matrixpunk.com:9800/i/2025/01/24/67930b801fe95.png)](https://home.matrixpunk.com:9800/i/2025/01/24/67930b801fe95.png)
+![1737689980932.png](https://home.matrixpunk.com:9800/i/2025/01/24/67930b801fe95.png)
 
 > 原因是我的信息不完整，需要我提供一些信息。
 
@@ -26,11 +26,10 @@ toc: true
 
 不知道如何解封，直接在回了一封邮件；寻问如何解封？ 用 chatGPT 写了封英文邮件；
 
-[![1737690178829.png](https://home.matrixpunk.com:9800/i/2025/01/24/67930c46b5511.png)](https://home.matrixpunk.com:9800/i/2025/01/24/67930c46b5511.png)
-
+![1737690178829.png](https://home.matrixpunk.com:9800/i/2025/01/24/67930c46b5511.png)
 原以为会要等几天，没想到几个小时过后，收到回复。
 
-[![1737690779910.png](https://home.matrixpunk.com:9800/i/2025/01/24/67930e9de6cd1.png)](https://home.matrixpunk.com:9800/i/2025/01/24/67930e9de6cd1.png)
+![1737690779910.png](https://home.matrixpunk.com:9800/i/2025/01/24/67930e9de6cd1.png)
 
 按照邮件给出的地址，填写相关信息，等了几个小时，域名就解封了。
 

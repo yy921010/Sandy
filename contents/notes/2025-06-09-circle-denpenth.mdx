@@ -130,7 +130,7 @@ const serviceList = [new SinopecService(), new MasterTooService(), new SinopecCo
 
 报错原因是SinopecCompService不是一个构造函数。我们尝试打印SinopecCompService：
 
-[![CleanShot_2025-06-09_at_10.06.10.png](https://home.matrixpunk.com:9800/i/2025/06/09/6846f96863ce6.png)](https://home.matrixpunk.com:9800/i/2025/06/09/6846f96863ce6.png)
+![CleanShot_2025-06-09_at_10.06.10.png](https://home.matrixpunk.com:9800/i/2025/06/09/6846f96863ce6.png)
 
 报错信息表明`SinopecCompService`在被实例化时不是一个构造函数，实际上它在调用时是`undefined`。
 
@@ -138,7 +138,7 @@ const serviceList = [new SinopecService(), new MasterTooService(), new SinopecCo
 
 我们将断点打到SinopecCompService对象上面：
 
-[![CleanShot_2025-06-09_at_10.27.13.png](https://home.matrixpunk.com:9800/i/2025/06/09/6846f96b344bf.png)](https://home.matrixpunk.com:9800/i/2025/06/09/6846f96b344bf.png)
+![CleanShot_2025-06-09_at_10.27.13.png](https://home.matrixpunk.com:9800/i/2025/06/09/6846f96b344bf.png)
 
 得到以下的堆栈，分析调用问题：
 
@@ -189,7 +189,7 @@ __webpack_require__ (bootstrap:853)....
 
 分析过程如图：
 
-[![CleanShot_2025-06-09_at_11.48.28.png](https://home.matrixpunk.com:9800/i/2025/06/09/6846f967d4fdd.png)](https://home.matrixpunk.com:9800/i/2025/06/09/6846f967d4fdd.png)
+![CleanShot_2025-06-09_at_11.48.28.png](https://home.matrixpunk.com:9800/i/2025/06/09/6846f967d4fdd.png)
 
 ### 解决方案
 

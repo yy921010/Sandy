@@ -15,7 +15,7 @@ toc: true
 基本流程：
 
 1. 从域名服务商那里申请一个免费的 SSL 证书，或者购买一个付费的 SSL 证书。然后将证书文件下载到本地。选择 nginx 格式的证书文件。
-   [![CleanShot 2025-05-10 at 19.00.15.png](https://home.matrixpunk.com:9800/i/2025/05/17/68285df5a92ff.png)](https://home.matrixpunk.com:9800/i/2025/05/17/68285df5a92ff.png)
+   ![CleanShot 2025-05-10 at 19.00.15.png](https://home.matrixpunk.com:9800/i/2025/05/17/68285df5a92ff.png)
 2. 下载解压缩包，解压缩后会得到以下文件：
    - 域名.com_bundle.crt
    - 域名.com_bundle.pem
@@ -32,7 +32,7 @@ toc: true
 
 1. 从腾讯云申请一个免费的 SSL 证书，腾讯云的证书有效时间是 3 个月。
 2. 由于腾讯云需要验证 DNS 解析，所以需要在域名服务商那里添加一条 TXT 记录，验证通过后就可以申请证书了。
-   [![CleanShot 2025-05-14 at 09.11.29.png](https://home.matrixpunk.com:9800/i/2025/05/17/682861c8a1f4a.png)](https://home.matrixpunk.com:9800/i/2025/05/17/682861c8a1f4a.png)
+   ![CleanShot 2025-05-14 at 09.11.29.png](https://home.matrixpunk.com:9800/i/2025/05/17/682861c8a1f4a.png)
 3. 进入阿里云的域名解析，添加一条 TXT 记录，内容为腾讯云提供的验证信息。
 4. 等待腾讯云的验证通过后，就可以申请证书了。
 5. 采取以上的基本流程，就可以完成替换 SSL 证书了。
