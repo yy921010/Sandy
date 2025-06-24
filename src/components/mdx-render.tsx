@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils";
 import { CopyButton } from "@/components/copy-button";
 import rehypeMermaid from "@/lib/rehypeMermaid";
 import { Mermaid } from "./mermaid";
+import { ImagePreview } from "./image-preview";
 
 const components: MDXRemoteProps["components"] = {
   table: Table,
@@ -30,6 +31,14 @@ const components: MDXRemoteProps["components"] = {
   td: TableCell,
   code: Code,
   mermaid: Mermaid,
+  img: ({ src, alt, className, ...props }: React.ComponentProps<"img">) => (
+    <ImagePreview
+      src={typeof src === "string" ? src : ""}
+      alt={alt || "图片内容"}
+      className={className}
+      {...props}
+    />
+  ),
   figure({ className, ...props }: React.ComponentProps<"figure">) {
     const hasPrettyCode = "data-rehype-pretty-code-figure" in props;
     return (
