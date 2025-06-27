@@ -192,16 +192,13 @@ export function ImagePreview({
   ...props
 }: ImagePreviewProps & React.ImgHTMLAttributes<HTMLImageElement>) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
   const handleImageLoad = () => {
-    setIsLoading(false);
     setHasError(false);
   };
 
   const handleImageError = () => {
-    setIsLoading(false);
     setHasError(true);
   };
 
@@ -214,14 +211,6 @@ export function ImagePreview({
   return (
     <>
       <span className="relative group inline-block overflow-hidden">
-        {/* 加载状态 */}
-        {isLoading && (
-          <span className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded">
-            <span className="w-6 h-6 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
-          </span>
-        )}
-
-        {/* 错误状态 */}
         {hasError && (
           <span className="flex items-center justify-center p-4 bg-gray-100 dark:bg-gray-800 rounded text-gray-500 dark:text-gray-400">
             <span className="text-sm">图片加载失败</span>
@@ -249,8 +238,7 @@ export function ImagePreview({
           />
         </button>
 
-        {/* 悬停提示 */}
-        {!hasError && !isLoading && (
+        {!hasError && (
           <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-foreground/10 transition-all duration-200 pointer-events-none">
             <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               <span className="bg-white/90 dark:bg-black/90 rounded-lg px-3 py-1 text-sm font-medium shadow-lg">
